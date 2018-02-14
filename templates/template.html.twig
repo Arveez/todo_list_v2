@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{{ dump() }}
+    {{ parent() }}
+<section data-initialArticles="{{ initialArticles }}" id="section1">
+    <form v-on:submit.prevent="newArticle">
+        <input
+                v-model="articleInput"
+                v-bind:placeHolder="placeHolder"
+                v-bind:style="myStyle">
+    </form>
+    <ul>
+        <li v-on:click="removeArticle" v-for="article in articles">${ article }</li>
+    </ul>
+
+</section>
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('build/app.js') }}"></script>
+    {% endblock %}
