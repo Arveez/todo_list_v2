@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{{ dump() }}
     {{ parent() }}
 <section data-initialArticles="{{ initialArticles }}" id="section1">
     <form v-on:submit.prevent="newArticle">
