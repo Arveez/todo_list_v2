@@ -158,6 +158,9 @@
     "symfony/http-kernel": {
         "version": "v4.0.4"
     },
+    "symfony/inflector": {
+        "version": "v4.0.4"
+    },
     "symfony/lts": {
         "version": "4-dev"
     },
@@ -184,6 +187,9 @@
     },
     "symfony/profiler-pack": {
         "version": "v1.0.3"
+    },
+    "symfony/property-access": {
+        "version": "v4.0.4"
     },
     "symfony/routing": {
         "version": "4.0",
