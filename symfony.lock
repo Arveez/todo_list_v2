@@ -1,4 +1,7 @@
 {
+    "cboden/ratchet": {
+        "version": "v0.4.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -56,6 +59,9 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "evenement/evenement": {
+        "version": "v3.0.1"
+    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.0",
         "recipe": {
@@ -64,6 +70,9 @@
             "version": "2.0",
             "ref": "370bcf99b04c0dfd0b545745aad622d757af5e1b"
         }
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.4.2"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -80,11 +89,38 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.0.2"
     },
     "psr/simple-cache": {
         "version": "1.0.0"
+    },
+    "ratchet/rfc6455": {
+        "version": "v0.2.3"
+    },
+    "react/cache": {
+        "version": "v0.4.2"
+    },
+    "react/dns": {
+        "version": "v0.4.12"
+    },
+    "react/event-loop": {
+        "version": "v0.4.3"
+    },
+    "react/promise": {
+        "version": "v2.5.1"
+    },
+    "react/promise-timer": {
+        "version": "v1.2.1"
+    },
+    "react/socket": {
+        "version": "v0.8.9"
+    },
+    "react/stream": {
+        "version": "v0.7.7"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",

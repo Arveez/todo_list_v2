@@ -23,8 +23,9 @@ class ItemController extends AbstractController
 
         $datas = [];
 
-        foreach ($items as $item) {
-            $datas[$item->getId()] = $item->getName();
+        for ($i = 0 ; $i< count($items) ; $i++) {
+            $datas[$i]['id'] = $items[$i]->getId();
+            $datas[$i]['name'] = $items[$i]->getName();
         }
         $items = json_encode($datas);
 
@@ -36,9 +37,9 @@ class ItemController extends AbstractController
 
     /**
      * @param $name
-     * @Route("/item/new/{name}")
+     * @Route("/item/new/{name}", name="new")
      */
-    public function add($name) {
+    public  function add($name) {
 
         $em = $this->getDoctrine()->getManager();
         $item = new Item();

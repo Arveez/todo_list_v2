@@ -18,7 +18,6 @@ Encore
     // .addStyleEntry('css/app', './assets/css/app.scss')
 
     .addEntry('app', './assets/js/app.js')
-    .addEntry('test', './assets/js/test.js')
 
     .addEntry('todo', './assets/js/todo.js')
     .enableVueLoader()

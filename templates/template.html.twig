@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    {{ dump(initialArticles) }}
     {{ parent() }}
 <section data-initialArticles="{{ initialArticles }}" id="section1">
+
+    <h3 v-if="connected">connecté</h3>
     <form v-on:submit.prevent="newArticle">
         <input
                 v-model="articleInput"
@@ -9,12 +12,12 @@
                 v-bind:style="myStyle">
     </form>
     <ul>
-        <li v-on:click="removeArticle" v-for="article in articles">${ article }</li>
+        <li v-on:click="removeArticle" v-for="(article, index) of articles" v-bind:id="article.id" >${ article.name }</li>
     </ul>
 
 </section>
     {% endblock %}
     {% block javascripts %}
         {{ parent() }}
-        <script src="{{ asset('build/app.js') }}"></script>
+        <script src="{{ asset('build/todo.js') }}"></script>
     {% endblock %}
