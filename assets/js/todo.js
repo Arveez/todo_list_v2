@@ -4,12 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('wsServer function called');
         var conn = new WebSocket('ws://localhost:8080');
+
         conn.onopen = function (e) {
             vm.connected = true;
-
         };
         conn.onmessage = function (ev) {
-            console.log(ev);
+            vm.addArticle(JSON.parse(ev.data));
+            console.log((ev.data));
         };
         conn.onclose = function() {
             vm.connected = false;
@@ -31,19 +32,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         methods: {
+            addArticle: function(article) {
+                vm.articles.push(article)  ;
+            },
             newArticle: function (event) {
-                this.server.send(this.articleInput);
                 event.preventDefault();
+                this.server.send(this.articleInput);
+                this.articleInput = '';
             },
             removeArticle: function (el) {
-                this.server.send(el.target.id);
+                this.server.send(parseInt(el.target.id));
                 el.target.remove();
             }
         },
         mounted: function () {
             this.server = wsServer();
             this.articles = JSON.parse(document.querySelector('#section1').getAttribute('data-initialArticles'));
-            console.log(JSON.parse(document.querySelector('#section1').getAttribute('data-initialArticles')));
         }
     });
 });

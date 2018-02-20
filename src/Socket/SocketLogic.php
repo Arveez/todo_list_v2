@@ -9,7 +9,6 @@
 namespace App\Socket;
 
 
-use App\Controller\ItemController;
 use App\Entity\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ratchet\ConnectionInterface;
@@ -31,31 +30,56 @@ class SocketLogic implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->add($conn);
-        $conn->send('I\'m the socket server');
-
-
     }
-
     public function onClose(ConnectionInterface $conn)
     {
         $this->clients->removeElement($conn);
     }
-
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         $conn->close();
     }
-
     public function onMessage(ConnectionInterface $from, $msg)
     {
+        if (!is_numeric($msg)) {
+
+            $lastInsertedItem = $this->add($msg);
+            $lastInsertedItem = json_encode($lastInsertedItem);
+
+            foreach ($this->clients as $client) {
+                $client->send($lastInsertedItem);
+            }
+
+        } else {
+
+            $this->remove($msg);
+        }
+    }
+
+    // custom methods
+
+    public function add ($name) {
+
         $em = $this->container->get('doctrine')->getManager();
         $item = new Item();
-        $item->setName($msg);
+        $item->setName($name);
         $em->persist($item);
         $em->flush();
 
+        $lastInsertedItem['id'] = $item->getId();
+        $lastInsertedItem['name'] = $item->getName();
 
-        $from->send($msg);
+        return $lastInsertedItem;
+
     }
+    public function remove($id) {
 
+        $em = $this->container->get('doctrine')->getManager();
+        $repo = $em->getRepository('App:Item');
+
+        $item = $repo->find($id);
+        $em->remove($item);
+
+        $em->flush();
+    }
 }

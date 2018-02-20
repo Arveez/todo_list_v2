@@ -35,17 +35,4 @@ class ItemController extends AbstractController
 
     }
 
-    /**
-     * @param $name
-     * @Route("/item/new/{name}", name="new")
-     */
-    public  function add($name) {
-
-        $em = $this->getDoctrine()->getManager();
-        $item = new Item();
-        $item->setName($name);
-        $em->persist($item);
-        $em->flush();
-
-    }
 }
