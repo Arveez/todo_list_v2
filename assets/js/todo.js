@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('wsServer function called');
         var conn = new WebSocket('ws://localhost:8080');
         conn.onopen = function (e) {
-            conn.send("test message send to socket server. back to the browser console ?");
             vm.connected = true;
 
         };

@@ -12,11 +12,12 @@ namespace App\Socket;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StartCommand extends Command
+class StartCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -27,7 +28,7 @@ class StartCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $server = IoServer::factory(new HttpServer(
-            new WsServer(new SocketLogic())
+            new WsServer(new SocketLogic($this->getContainer()))
         ),8080);
          $server->run();
    }

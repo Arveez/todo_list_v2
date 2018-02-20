@@ -9,17 +9,22 @@
 namespace App\Socket;
 
 
+use App\Controller\ItemController;
+use App\Entity\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SocketLogic extends AbstractController implements MessageComponentInterface
+class SocketLogic implements MessageComponentInterface
 {
     private $clients;
 
-    public function __construct()
+    private $container;
+
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
         $this->clients = new ArrayCollection();
     }
 
@@ -43,9 +48,14 @@ class SocketLogic extends AbstractController implements MessageComponentInterfac
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
+        $em = $this->container->get('doctrine')->getManager();
+        $item = new Item();
+        $item->setName($msg);
+        $em->persist($item);
+        $em->flush();
+
+
         $from->send($msg);
     }
-
-
 
 }
