@@ -26,7 +26,8 @@ class SocketLogic extends AbstractController implements MessageComponentInterfac
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->add($conn);
-        $conn->send('hullo ?');
+        $conn->send('I\'m the socket server');
+
 
     }
 
