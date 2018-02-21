@@ -5,14 +5,14 @@
 <section data-initialArticles="{{ initialArticles }}" id="section1">
 
     <h3 v-if="connected">connecté</h3>
-    <form v-on:submit.prevent="newArticle">
+    <form v-on:submit.prevent="articleCreate">
         <input
                 v-model="articleInput"
                 v-bind:placeHolder="placeHolder"
                 v-bind:style="myStyle">
     </form>
     <ul>
-        <li v-on:click="removeArticle" v-for="(article, index) of articles" v-bind:id="article.id" >${ article.name }</li>
+        <li v-on:click="articleDelete" v-for="(article, index) of articles" v-bind:id="article.id" >${ article.name }</li>
     </ul>
 
 </section>
