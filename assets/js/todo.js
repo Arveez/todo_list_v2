@@ -9,8 +9,21 @@ document.addEventListener('DOMContentLoaded', function () {
             vm.connected = true;
         };
         conn.onmessage = function (ev) {
-            vm.addArticle(JSON.parse(ev.data));
-            console.log((ev.data));
+
+            if (isNaN(ev.data)) {
+                vm.incomingArticleAdd(JSON.parse(ev.data));
+
+            } else {
+
+                vm.articles.forEach(function (article) {
+
+                   if (article.id == ev.data) {
+                       vm.incomingArticleRemove(vm.articles.indexOf(article));
+                       return true;
+                   }
+
+                })
+            }
         };
         conn.onclose = function() {
             vm.connected = false;
@@ -32,18 +45,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         methods: {
-            addArticle: function(article) {
+            incomingArticleAdd: function(article) {
                 vm.articles.push(article)  ;
             },
-            newArticle: function (event) {
+            articleCreate: function (event) {
                 event.preventDefault();
                 this.server.send(this.articleInput);
                 this.articleInput = '';
             },
-            removeArticle: function (el) {
+            articleDelete: function (el) {
                 this.server.send(parseInt(el.target.id));
-                el.target.remove();
+            },
+            incomingArticleRemove: function (indx) {
+                console.log(indx);
+                vm.articles.splice(indx, 1);
             }
+
         },
         mounted: function () {
             this.server = wsServer();

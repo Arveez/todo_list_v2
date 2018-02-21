@@ -53,6 +53,9 @@ class SocketLogic implements MessageComponentInterface
         } else {
 
             $this->remove($msg);
+            foreach ($this->clients as $client) {
+                $client->send($msg);
+            }
         }
     }
 
