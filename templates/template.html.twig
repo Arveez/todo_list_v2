@@ -2,13 +2,13 @@
 {% block body %}
     <div class="page" data-initialArticles="{{ initialArticles }}" id="section1">
         <header class="bar">
-            <div class="el corner">
+            <div class="corner">
                 <span v-if="connected" class=" plug fa fa-2x fa-plug"></span>
             </div>
-            <div class="el main_title">
+            <div class="main_title">
                 <h1 class="">MY&nbsp;LIST</h1>
             </div>
-            <div class="el corner menu ">
+            <div class="corner menu ">
                 <span class="fa fa-2x fa-bars"></span>
             </div>
         </header>
@@ -22,14 +22,14 @@
                 </ul>
             </div>
         </div>
-        <footer class="bar el">
-            <form id="articleInput" class="el" v-on:submit.prevent="articleCreate">
-                <input class=""
+        <footer class="bar">
+            <form id="" class="el" v-on:submit.prevent="articleCreate">
+                <input id="articleInput"
                        v-model="articleInput"
                        v-bind:placeHolder="placeHolder"
                        v-bind:style="myStyle">
             </form>
-            <span id="resetCross" class="el corner fa fa-2x fa-times"></span>
+            <span id="resetCross" class="el  fa fa-3x fa-times"></span>
         </footer>
     </div>
 {% endblock %}

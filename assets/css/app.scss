@@ -3,13 +3,12 @@
 
 // TODO : remove these lines
 body {
+  background-color: black;
   margin-top : -57px;
-  background-color: #979797;
   color: $font-color;
+
 }
-.sf-minitoolbar {
-  display: none;
-}
+
 // TODO ends here
 * {
   -webkit-box-sizing: border-box;
