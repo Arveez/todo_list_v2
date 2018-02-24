@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         conn.onopen = function (e) {
             vm.connected = true;
+            console.log('connected')
         };
         conn.onmessage = function (ev) {
 
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         conn.onclose = function() {
             vm.connected = false;
+            console.log('disconnected');
         };
         return conn;
     };

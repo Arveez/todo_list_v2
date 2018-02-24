@@ -10,10 +10,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends Controller
 {
-    public function returnTest() {
 
-        return new Response ("return !! ". $this->container->getParameter('boota'));
-
-    }
 
 }

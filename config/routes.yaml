@@ -2,11 +2,5 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-default:
-    path: /
-    controller: App\Controller\DefaultController::index
-return:
-    path: /return
-    controller: App\Controller\DefaultController::returnTest
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

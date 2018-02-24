@@ -1,3 +1,2 @@
 
-require('../css/app.css');
-//require('wsServer.js');
+require('../css/app.scss');

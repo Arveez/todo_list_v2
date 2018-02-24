@@ -1,22 +1,38 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {{ dump(initialArticles) }}
-    {{ parent() }}
-<section data-initialArticles="{{ initialArticles }}" id="section1">
+    <div class="page" data-initialArticles="{{ initialArticles }}" id="section1">
+        <header class="bar">
+            <div class="el corner">
+                <span v-if="connected" class=" plug fa fa-2x fa-plug"></span>
+            </div>
+            <div class="el main_title">
+                <h1 class="">MY&nbsp;LIST</h1>
+            </div>
+            <div class="el corner menu ">
+                <span class="fa fa-2x fa-bars"></span>
+            </div>
+        </header>
+        <div class="list_section">
+            <div class=" article_list">
+                <ul>
+                    <li v-on:click="articleDelete" v-for="(article, index) of articles" v-bind:id="article.id">
+                        ${ article.name }
+                    </li>
 
-    <h3 v-if="connected">connecté</h3>
-    <form v-on:submit.prevent="articleCreate">
-        <input
-                v-model="articleInput"
-                v-bind:placeHolder="placeHolder"
-                v-bind:style="myStyle">
-    </form>
-    <ul>
-        <li v-on:click="articleDelete" v-for="(article, index) of articles" v-bind:id="article.id" >${ article.name }</li>
-    </ul>
-
-</section>
-    {% endblock %}
+                </ul>
+            </div>
+        </div>
+        <footer class="bar el">
+            <form id="articleInput" class="el" v-on:submit.prevent="articleCreate">
+                <input class=""
+                       v-model="articleInput"
+                       v-bind:placeHolder="placeHolder"
+                       v-bind:style="myStyle">
+            </form>
+            <span id="resetCross" class="el corner fa fa-2x fa-times"></span>
+        </footer>
+    </div>
+{% endblock %}
     {% block javascripts %}
         {{ parent() }}
         <script src="{{ asset('build/todo.js') }}"></script>
