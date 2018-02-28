@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\ItemList;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/", name="item")
+     * @Route("/item", name="item")
      */
     public function show()
     {
@@ -21,7 +23,7 @@ class ItemController extends AbstractController
 
         $datas = [];
 
-        for ($i = 0 ; $i< count($items) ; $i++) {
+        for ($i = 0; $i < count($items); $i++) {
             $datas[$i]['id'] = $items[$i]->getId();
             $datas[$i]['name'] = $items[$i]->getName();
         }
@@ -31,6 +33,23 @@ class ItemController extends AbstractController
             'initialArticles' => $items
         ]));
 
+    }
+
+    /**
+     * @Route("/item/add/itemlist/{id}/{name}")
+     */
+    public function add(ItemList $itemList, $name)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $item = new Item();
+        $item->setName($name);
+        $itemList->addItem($item);
+
+        $em->persist($itemList);
+        $em->flush();
+
+        return new Response();
     }
 
 }
