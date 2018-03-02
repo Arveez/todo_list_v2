@@ -36,7 +36,7 @@ class ItemController extends AbstractController
     }
 
     /**
-     * @Route("/item/add/itemlist/{id}/{name}")
+     * @Route("/add/itemlist/{id}/{name}")
      */
     public function add(ItemList $itemList, $name)
     {

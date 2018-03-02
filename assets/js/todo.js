@@ -34,9 +34,30 @@ document.addEventListener('DOMContentLoaded', function () {
         return conn;
     };
 
+    var components = [];
+    var names = JSON.parse(
+        document.querySelector(
+            '#page_bloc'
+        ).getAttribute(
+            'data-list_names'
+        )
+    );
+    var lists = JSON.parse(
+        document.querySelector(
+            '#page_bloc'
+        ).getAttribute(
+            'data-lists'
+        )
+    )
+    console.log(names);
 
-    var listComponent = {
-        template: `
+    names.forEach(function (name) {
+
+        articles = name.data;
+        console.log(articles);
+
+        Vue.component(name, {
+            template: `
         <div class="component">
             <header class="bar">
                 <div class="corner">
@@ -44,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span v-else>bop</span>
                 </div>
                 <div class="main_title">
-                    <h1 class="">MY&nbsp;LIST</h1>
+                    <h1 class="">{{ listName }}</h1>
                 </div>
                 <div class="corner menu ">
                     <span class="fa fa-2x fa-bars"></span>
@@ -72,34 +93,37 @@ document.addEventListener('DOMContentLoaded', function () {
             </footer>
         </div>
         `,
-        props: [
-            'connected',
-            'articleInput',
-            'focusStyle',
-            'placeHolder',
-            'articles'
-        ],
-        methods: {
-            articleClicked(ev) {
-                console.log('comp: article clicked ; id : ' + ev.target.id);
-                this.$emit('to-parent-article-clicked', ev.target.id);
+            props: [
+                'connected',
+                'articleInput',
+                'focusStyle',
+                'placeHolder',
+                'articles',
+            ],
+            data() {
+                return {
+                    'listName': name
+                }
             },
-            formSubmit(){
-                this.$emit('to-parent-form-submit', this.articleInput);
-                console.log(this.articleInput);
+            methods: {
+                articleClicked(ev) {
+                    console.log('comp: article clicked ; id : ' + ev.target.id);
+                    this.$emit('to-parent-article-clicked', ev.target.id);
+                },
+                formSubmit() {
+                    this.$emit('to-parent-form-submit', this.articleInput);
+                    console.log(this.articleInput);
+                }
             }
-        }
-    };
+        });
 
-
+    });
+    console.log(components);
 
     Vue.config.devtools = true;
     var vm = new Vue({
         el: '#page_bloc',
         delimiters: ['${', '}'],
-        components: {
-            'list-component': listComponent
-        },
         data: {
             connected: false,
             articleInput: 'NULL',
@@ -107,12 +131,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 autofocus: 'autofocus'
             },
             placeHolder: 'Ajoutez...',
-            articles: [],
-            socketServer: 'NULL'
+            articles: lists,
+            socketServer: 'NULL',
+            componentsNames: names,
+            currentView: names[2],
         },
         methods: {
             articleDelete: function (id) {
-                console.log('parent : articleclicked ' + id  );
+                console.log('parent : articleclicked ' + id);
                 this.socketServer.send(id);
             },
             incomingArticleRemove: function (indx) {
@@ -123,15 +149,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.socketServer.send(name);
                 this.articleInput = '';
             },
-            incomingArticleAdd: function(article) {
-                vm.articles.push(article)  ;
+            incomingArticleAdd: function (article) {
+                vm.articles.push(article);
             }
         },
         mounted() {
             console.log('mounted');
             this.socketServer = wsServer();
             this.articles = JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles'));
-            console.log (JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles')));
+            console.log(JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles')));
         }
     });
 });

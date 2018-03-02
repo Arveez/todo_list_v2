@@ -21,17 +21,24 @@ class DefaultController extends Controller
     {
         $lists = $repository->findAll();
         $refactoredLists = [];
+        $listNames = [];
         foreach ($lists as $list) {
             $name = $list->getName();
+
+            if (count($list->getItems()) != 0) {
+
+                $listNames[] = $name;
+            }
             $itemsArray = $list->getItems();
-            for ($i = 0 ; $i < count($itemsArray) ; $i++) {
+            for ($i = 0; $i < count($itemsArray); $i++) {
                 $refactoredLists[$name][$i]['id'] = $itemsArray[$i]->getId();
                 $refactoredLists[$name][$i]['name'] = $itemsArray[$i]->getName();
             }
 
         }
-        return new Response($this->renderView('test.html.twig', [
+        return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
+            'listNames' => $listNames
         ]));
     }
 

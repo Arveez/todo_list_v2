@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="page"
+         data-lists="{{ lists|json_encode }}"
+         data-list_names="{{ listNames|json_encode }}"
+         id="page_bloc">
+
+        <component v-bind:is="currentView"
+                v-bind:place-holder="placeHolder"
+                v-bind:articles="articles[currentView]"
+                v-bind:connected="connected"
+                v-on:to-parent-article-clicked="articleDelete"
+                v-on:to-parent-form-submit="articleCreate">
+        </component>
+    </div>
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('build/todo.js') }}"></script>
+    {% endblock %}
