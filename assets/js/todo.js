@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="component">
             <header class="bar">
                 <div class="corner">
-                    <span v-if="connected" class=" plug fa fa-2x fa-plug"></span>
+                    <span v-if="connected == true" class="plug fa fa-2x fa-plug"></span>
+                    <span v-else>bop</span>
                 </div>
                 <div class="main_title">
                     <h1 class="">MY&nbsp;LIST</h1>
@@ -54,8 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <ul>
                         <li v-for="(article, key) of articles" 
                             v-bind:id="article.id"
-                            v-on:click="articleClicked"
-                            >
+                            v-on:click="articleClicked">
                                 {{ article.name }}
                         </li>
                     </ul>
