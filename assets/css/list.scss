@@ -26,12 +26,12 @@ footer {
   display: grid;
   grid-template-columns: 85% 15%;
 }
-.page {
+.component {
   margin: auto;
   background-color: $bg-color;
   max-width: 360px;
   display: grid;
-  grid-template-rows: 10vh 78vh 10vh;
+  grid-template-rows: 10vh 64vh 10vh;
 }
 .bar {
   background-color: $el-bg-color;
