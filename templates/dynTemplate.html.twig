@@ -6,12 +6,21 @@
          id="page_bloc">
 
         <component v-bind:is="currentView"
-                v-bind:place-holder="placeHolder"
-                v-bind:articles="articles[currentView]"
-                v-bind:connected="connected"
-                v-on:to-parent-article-clicked="articleDelete"
-                v-on:to-parent-form-submit="articleCreate">
+                   v-bind:place-holder="placeHolder"
+                   v-bind:articles="articles[currentView]"
+                   v-bind:connected="connected"
+                   v-on:to-parent-article-clicked="articleDelete"
+                   v-on:to-parent-form-submit="articleCreate">
         </component>
+        <footer class="bar">
+            <form id="" class="el" v-on:submit.prevent="articleCreate">
+                <input id="articleInput"
+                       v-model="articleInput"
+                       v-bind:placeholder="placeHolder"
+                       v-bind:style="focusStyle">
+            </form>
+            <span id="resetCross" class="el  fa fa-3x fa-times"></span>
+        </footer>
     </div>
 {% endblock %}
     {% block javascripts %}

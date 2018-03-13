@@ -9,7 +9,9 @@
 namespace App\Socket;
 
 
+use App\Controller\ItemController;
 use App\Entity\Item;
+use App\Entity\ItemList;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
@@ -41,6 +43,19 @@ class SocketLogic implements MessageComponentInterface
     }
     public function onMessage(ConnectionInterface $from, $msg)
     {
+
+        $lisName = $msg[0];
+        $articleName = $msg[1];
+
+        $controller = new  ItemController();
+        $em = $this->container->get('doctrine')->getManager();
+
+        $itemList = $em->getRepository(ItemList::class)->findBy(['name' => $lisName]);
+
+        $controller->add($itemList[0], $articleName);
+
+        $from->send($msg);
+/*        var_dump(json_decode($msg));
         if (!is_numeric($msg)) {
 
             $lastInsertedItem = $this->add($msg);
@@ -56,7 +71,7 @@ class SocketLogic implements MessageComponentInterface
             foreach ($this->clients as $client) {
                 $client->send($msg);
             }
-        }
+        }*/
     }
 
     // custom methods

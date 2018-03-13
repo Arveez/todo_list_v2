@@ -36,6 +36,9 @@ class DefaultController extends Controller
             }
 
         }
+        /*var_dump("<pre>");
+        var_dump($refactoredLists);
+        var_dump("</pre>");*/
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
             'listNames' => $listNames

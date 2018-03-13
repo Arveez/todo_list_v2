@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     var components = [];
+
     var names = JSON.parse(
         document.querySelector(
             '#page_bloc'
@@ -48,8 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
         ).getAttribute(
             'data-lists'
         )
-    )
+    );
+    console.log('names : ');
     console.log(names);
+    console.log('lists : ' );
+    console.log(lists);
 
     names.forEach(function (name) {
 
@@ -82,22 +86,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </ul>
                 </div>
             </div>
-            <footer class="bar">
-                <form id="" class="el" v-on:submit.prevent="formSubmit">
-                    <input id="articleInput"
-                           v-model="articleInput"
-                           v-bind:placeholder="placeHolder"
-                           v-bind:style="focusStyle">
-                </form>
-                <span id="resetCross" class="el  fa fa-3x fa-times"></span>
-            </footer>
+
         </div>
         `,
             props: [
                 'connected',
-                'articleInput',
-                'focusStyle',
-                'placeHolder',
                 'articles',
             ],
             data() {
@@ -134,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
             articles: lists,
             socketServer: 'NULL',
             componentsNames: names,
-            currentView: names[2],
+            currentView: names[0],
         },
         methods: {
             articleDelete: function (id) {
@@ -145,19 +138,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(indx);
                 vm.articles.splice(indx, 1);
             },
-            articleCreate: function (name) {
-                this.socketServer.send(name);
+            articleCreate: function () {
+                this.socketServer.send(JSON.stringify([this.currentView, this.articleInput]));
                 this.articleInput = '';
             },
             incomingArticleAdd: function (article) {
-                vm.articles.push(article);
+                console.log(article);
+                //vm.articles.push(article);
             }
         },
         mounted() {
             console.log('mounted');
             this.socketServer = wsServer();
-            this.articles = JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles'));
-            console.log(JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles')));
+            //this.articles = JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles'));
+            //console.log(JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles')));
         }
     });
 });
