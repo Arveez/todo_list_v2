@@ -12,10 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         conn.onmessage = function (ev) {
 
+            console.log('message revenu du serveur');
+            console.log(ev.data);
             if (isNaN(ev.data)) {
                 vm.incomingArticleAdd(JSON.parse(ev.data));
-
-            } else {
+            }
+/*            } else {
 
                 vm.articles.forEach(function (article) {
 
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
 
                 })
-            }
+            }*/
         };
         conn.onclose = function () {
             vm.connected = false;
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('names : ');
     console.log(names);
     console.log('lists : ' );
-    console.log(lists);
+    console.log(lists["sillac"][1]);
 
     names.forEach(function (name) {
 
@@ -119,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         delimiters: ['${', '}'],
         data: {
             connected: false,
-            articleInput: 'NULL',
+            articleInput: '',
             focusStyle: {
                 autofocus: 'autofocus'
             },
@@ -127,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
             articles: lists,
             socketServer: 'NULL',
             componentsNames: names,
-            currentView: names[0],
+            currentView: names[1],
         },
         methods: {
             articleDelete: function (id) {
@@ -139,11 +141,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 vm.articles.splice(indx, 1);
             },
             articleCreate: function () {
-                this.socketServer.send(JSON.stringify([this.currentView, this.articleInput]));
+                console.log(window.location.href);
+                axios.get(window.location.href + 'add/itemlist/' + this.currentView + '/' + this.articleInput)
+                    .then(response => {
+                        console.log("ajax returns : ");
+                        console.log(response.data);
+                        this.socketServer.send(JSON.stringify(response.data));
+                    });
                 this.articleInput = '';
             },
             incomingArticleAdd: function (article) {
                 console.log(article);
+                console.log(this.articles);
+                this.articles[article['listName']].push({'id' : article['articleId'], 'name' : article['articleName']});
                 //vm.articles.push(article);
             }
         },

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Item;
 use App\Entity\ItemList;
+use App\Socket\SocketLogic;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,20 +37,24 @@ class ItemController extends AbstractController
     }
 
     /**
-     * @Route("/add/itemlist/{id}/{name}")
+     * @Route("/add/itemlist/{name}/{articleName}")
      */
-    public function add(ItemList $itemList, $name)
+    public function add(SocketLogic $socketLogic, ItemList $list, $articleName)
     {
         $em = $this->getDoctrine()->getManager();
 
         $item = new Item();
-        $item->setName($name);
-        $itemList->addItem($item);
+        $item->setName($articleName);
+        $list->addItem($item);
 
-        $em->persist($itemList);
+        $em->persist($list);
         $em->flush();
 
-        return new Response();
+        return new Response(json_encode([
+            'listName' => $list->getName(),
+            'articleName' => $item->getName(),
+            'articleId' => $item->getId()
+        ]));
     }
 
 }

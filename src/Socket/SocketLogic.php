@@ -32,6 +32,7 @@ class SocketLogic implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->add($conn);
+        echo "new conn\n";
     }
     public function onClose(ConnectionInterface $conn)
     {
@@ -43,53 +44,16 @@ class SocketLogic implements MessageComponentInterface
     }
     public function onMessage(ConnectionInterface $from, $msg)
     {
-
-        $lisName = $msg[0];
-        $articleName = $msg[1];
-
-        $controller = new  ItemController();
-        $em = $this->container->get('doctrine')->getManager();
-
-        $itemList = $em->getRepository(ItemList::class)->findBy(['name' => $lisName]);
-
-        $controller->add($itemList[0], $articleName);
-
-        $from->send($msg);
-/*        var_dump(json_decode($msg));
-        if (!is_numeric($msg)) {
-
-            $lastInsertedItem = $this->add($msg);
-            $lastInsertedItem = json_encode($lastInsertedItem);
-
-            foreach ($this->clients as $client) {
-                $client->send($lastInsertedItem);
-            }
-
-        } else {
-
-            $this->remove($msg);
-            foreach ($this->clients as $client) {
-                $client->send($msg);
-            }
-        }*/
-    }
-
-    // custom methods
-
-    public function add ($name) {
-
-        $em = $this->container->get('doctrine')->getManager();
-        $item = new Item();
-        $item->setName($name);
-        $em->persist($item);
-        $em->flush();
-
-        $lastInsertedItem['id'] = $item->getId();
-        $lastInsertedItem['name'] = $item->getName();
-
-        return $lastInsertedItem;
+        var_dump($msg . '\n');
+        foreach ($this->clients as $client)
+        {
+            $client->send($msg);
+        }
 
     }
+
+
+
     public function remove($id) {
 
         $em = $this->container->get('doctrine')->getManager();
