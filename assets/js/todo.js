@@ -12,24 +12,21 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         conn.onmessage = function (ev) {
 
-            // TODO : separate delete from add
+            data = JSON.parse(ev.data);
 
-            console.log('message revenu du serveur');
-            console.log(ev.data);
-            if (isNaN(ev.data)) {
-                vm.incomingArticleAdd(JSON.parse(ev.data));
-            }
-/*            } else {
 
-                vm.articles.forEach(function (article) {
+            if (isNaN(data[0])) {
+                vm.incomingArticleAdd(data);
+            } else {
+                vm.articles[data[1]].forEach(function (article) {
 
-                    if (article.id == ev.data) {
-                        vm.incomingArticleRemove(vm.articles.indexOf(article));
+                    if (article.id == data[0]) {
+                        vm.incomingArticleRemove(vm.articles[data[1]].indexOf(article), data[1]);
                         return true;
                     }
 
                 })
-            }*/
+            }
         };
         conn.onclose = function () {
             vm.connected = false;
@@ -54,15 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'data-lists'
         )
     );
-    console.log('names : ');
-    console.log(names);
-    console.log('lists : ' );
-    console.log(lists["sillac"][1]);
 
     names.forEach(function (name) {
-
-        articles = name.data;
-        console.log(articles);
 
         Vue.component(name, {
             template: `
@@ -104,18 +94,15 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             methods: {
                 articleClicked(ev) {
-                    console.log('comp: article clicked ; id : ' + ev.target.id);
                     this.$emit('to-parent-article-clicked', ev.target.id);
                 },
                 formSubmit() {
                     this.$emit('to-parent-form-submit', this.articleInput);
-                    console.log(this.articleInput);
                 }
             }
         });
 
     });
-    console.log(components);
 
     Vue.config.devtools = true;
     var vm = new Vue({
@@ -135,79 +122,34 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         methods: {
             articleDelete: function (id) {
-                console.log(window.location);
                 axios.get(window.location.origin
                     + '/delete/item/'
-                    + id).then(response => {
-                        console.log("retour ajac delete");
-                        console.log(response);
+                    + id)
+                    .then(response => {
                 });
-                console.log('parent : articleclicked ' + id);
-                this.socketServer.send(JSON.stringify([this.currentView, id]));
+                this.socketServer.send(JSON.stringify([id, this.currentView]));
             },
-            incomingArticleRemove: function (indx) {
-                console.log(indx);
-                vm.articles.splice(indx, 1);
+            incomingArticleRemove: function (indx, listName) {
+                vm.articles[listName].splice(indx, 1);
             },
             articleCreate: function () {
-                console.log(window.location.href);
                 axios.get(window.location.origin
                     + '/add/itemlist/'
                     + this.currentView
                     + '/'
                     + this.articleInput)
                     .then(response => {
-                        console.log("ajax returns : ");
-                        console.log(response.data);
                         this.socketServer.send(JSON.stringify(response.data));
                     });
                 this.articleInput = '';
             },
             incomingArticleAdd: function (article) {
-                console.log(article);
-                console.log(this.articles);
                 this.articles[article['listName']].push({'id' : article['articleId'], 'name' : article['articleName']});
-                //vm.articles.push(article);
             }
         },
         mounted() {
-            console.log('mounted');
             this.socketServer = wsServer();
-            //this.articles = JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles'));
-            //console.log(JSON.parse(document.querySelector('#page_bloc').getAttribute('data-initialArticles')));
         }
     });
 });
-/*        el: '#section1',
-        data: {
-            articleInput: '',
-            placeHolder: 'entrez un article',
-            articles: [],
-            connected: false,
-            server: '',
-            myStyle: {
-                autofocus: 'autofocus'
-            }
-        },
-        methods: {
-            incomingArticleAdd: function(article) {
-                vm.articles.push(article)  ;
-            },
-            articleCreate: function (event) {
-                event.preventDefault();
-                this.server.send(this.articleInput);
-                this.articleInput = '';
-            },
-            articleDelete: function (el) {
-                this.server.send(parseInt(el.target.id));
-            },
-            incomingArticleRemove: function (indx) {
-                console.log(indx);
-                vm.articles.splice(indx, 1);
-            }
 
-        },
-        mounted: function () {
-            this.server = wsServer();
-            this.articles = JSON.parse(document.querySelector('#section1').getAttribute('data-initialArticles'));
-        }*/

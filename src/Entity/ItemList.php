@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Item;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemListRepository")

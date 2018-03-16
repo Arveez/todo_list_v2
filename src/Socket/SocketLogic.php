@@ -9,9 +9,6 @@
 namespace App\Socket;
 
 
-use App\Controller\ItemController;
-use App\Entity\Item;
-use App\Entity\ItemList;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
@@ -44,24 +41,9 @@ class SocketLogic implements MessageComponentInterface
     }
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        var_dump($msg . '\n');
         foreach ($this->clients as $client)
         {
             $client->send($msg);
         }
-
-    }
-
-
-
-    public function remove($id) {
-
-        $em = $this->container->get('doctrine')->getManager();
-        $repo = $em->getRepository('App:Item');
-
-        $item = $repo->find($id);
-        $em->remove($item);
-
-        $em->flush();
     }
 }
