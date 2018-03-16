@@ -25,7 +25,7 @@ class ItemList
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Item", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Item", cascade={"persist", "remove"})
      */
     private $items;
 
@@ -75,11 +75,17 @@ class ItemList
     {
         $this->items = $items;
     }
+
     // add your own fields
 
     public function addItem(Item $item) {
 
         $this->items->add($item);
+
+    }
+    public function  removeItem(Item $item) {
+
+        $this->items->remove($item->getId());
 
     }
 }

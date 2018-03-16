@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         conn.onmessage = function (ev) {
 
+            // TODO : separate delete from add
+
             console.log('message revenu du serveur');
             console.log(ev.data);
             if (isNaN(ev.data)) {
@@ -133,8 +135,15 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         methods: {
             articleDelete: function (id) {
+                console.log(window.location);
+                axios.get(window.location.origin
+                    + '/delete/item/'
+                    + id).then(response => {
+                        console.log("retour ajac delete");
+                        console.log(response);
+                });
                 console.log('parent : articleclicked ' + id);
-                this.socketServer.send(id);
+                this.socketServer.send(JSON.stringify([this.currentView, id]));
             },
             incomingArticleRemove: function (indx) {
                 console.log(indx);
@@ -142,7 +151,11 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             articleCreate: function () {
                 console.log(window.location.href);
-                axios.get(window.location.href + 'add/itemlist/' + this.currentView + '/' + this.articleInput)
+                axios.get(window.location.origin
+                    + '/add/itemlist/'
+                    + this.currentView
+                    + '/'
+                    + this.articleInput)
                     .then(response => {
                         console.log("ajax returns : ");
                         console.log(response.data);
