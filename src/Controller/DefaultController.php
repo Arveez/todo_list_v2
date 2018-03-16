@@ -23,10 +23,10 @@ class DefaultController extends Controller
 
             $name = $list->getName();
 
-            if (count($list->getItems()) != 0) {
+    //        if (count($list->getItems()) != 0) {
 
                 $listNames[] = $name;
-            }
+     //       }
             $itemsArray = $list->getItems();
             for ($i = 0; $i < count($itemsArray); $i++) {
                 $refactoredLists[$name][$i]['id'] = $itemsArray[$i]->getId();

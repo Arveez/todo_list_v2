@@ -57,18 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
         Vue.component(name, {
             template: `
         <div class="component">
-            <header class="bar">
-                <div class="corner">
-                    <span v-if="connected == true" class="plug fa fa-2x fa-plug"></span>
-                    <span v-else>bop</span>
-                </div>
                 <div class="main_title">
-                    <h1 class="">{{ listName }}</h1>
+                    <h1 class="listName">{{ listName }}</h1>
                 </div>
-                <div class="corner menu ">
-                    <span class="fa fa-2x fa-bars"></span>
-                </div>
-            </header>
             <div class="list_section">
                 <div class="article_list">
                     <ul>
@@ -118,15 +109,34 @@ document.addEventListener('DOMContentLoaded', function () {
             articles: lists,
             socketServer: 'NULL',
             componentsNames: names,
-            currentView: names[1],
+            nameIndex: 0,
+            currentView: names[this.nameIndex],
         },
         methods: {
+            previousList() {
+                console.log("previous");
+                this.nameIndex--;
+                if (this.nameIndex == -1) {
+                    this.nameIndex = names.length - 1;
+                }
+                console.log(this.nameIndex);
+                this.currentView = names[this.nameIndex];
+            },
+            nextList() {
+                console.log("next");
+                this.nameIndex++;
+                if (this.nameIndex == names.length) {
+                    this.nameIndex = 0;
+                }
+                console.log(this.nameIndex);
+                this.currentView = names[this.nameIndex];
+            },
             articleDelete: function (id) {
                 axios.get(window.location.origin
                     + '/delete/item/'
                     + id)
                     .then(response => {
-                });
+                    });
                 this.socketServer.send(JSON.stringify([id, this.currentView]));
             },
             incomingArticleRemove: function (indx, listName) {
@@ -144,11 +154,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.articleInput = '';
             },
             incomingArticleAdd: function (article) {
-                this.articles[article['listName']].push({'id' : article['articleId'], 'name' : article['articleName']});
+
+                // TODO : fix issued on new list
+
+                if (this.articles[article['listName']] == undefined) {
+
+                    this.articles[article['listName']] = article['listName'];
+                    this.articles[article['listName'][0]] = {'id': article['articleId'], 'name': article['articleName']}
+                } else {
+                    this.articles[article['listName']].push({
+                        'id': article['articleId'],
+                        'name': article['articleName']
+                    });
+                }
             }
+
         },
         mounted() {
             this.socketServer = wsServer();
+            this.currentView = names[this.nameIndex]
         }
     });
 });
