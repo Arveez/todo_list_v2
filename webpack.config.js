@@ -18,8 +18,6 @@ Encore
     // .addStyleEntry('css/app', './assets/css/app.scss')
 
     .addEntry('app', './assets/js/app.js')
-
-    .addEntry('todo', './assets/js/todo.js')
     .enableVueLoader()
 
     // uncomment if you use Sass/SCSS files
