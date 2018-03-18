@@ -4,18 +4,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var conn = new WebSocket('ws://localhost:8080');
 
-        conn.onopen = function (e) {
+        conn.onopen = (e) => {
             vm.connected = true;
             console.log('connected')
         };
-        conn.onmessage = function (ev) {
+        conn.onmessage = (ev) => {
 
             data = JSON.parse(ev.data);
 
             if (isNaN(data[0])) {
                 vm.incomingItemAdd(data);
             } else {
-                vm.items[data[1]].forEach(function (item) {
+                vm.items[data[1]].forEach( (item) => {
 
                     if (item.id == data[0]) {
                         vm.incomingItemRemove(vm.items[data[1]].indexOf(item), data[1]);
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             }
         };
-        conn.onclose = function () {
+        conn.onclose = () => {
             vm.connected = false;
             console.log('disconnected');
         };
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         )
     );
 
-    names.forEach(function (name) {
+    names.forEach( (name) => {
 
         Vue.component(name, {
             template: `
@@ -128,15 +128,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 this.currentView = names[this.nameIndex];
             },
-            itemDelete: function (id) {
+            itemDelete (id) {
                 axios.get(window.location.origin
                     + '/delete/item/'
                     + id)
-                    .then(response => {
+                    .then( (response) => {
                     });
                 this.socketServer.send(JSON.stringify([id, this.currentView]));
             },
-            incomingItemRemove: function (indx, listName) {
+            incomingItemRemove (indx, listName) {
                 vm.items[listName].splice(indx, 1);
             },
             itemCreate: function () {
@@ -145,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     + this.currentView
                     + '/'
                     + this.itemInput)
-                    .then(response => {
+                    .then( (response) => {
                         this.socketServer.send(JSON.stringify(response.data));
                     });
                 this.itemInput = '';
             },
-            incomingItemAdd: function (item) {
+            incomingItemAdd (item) {
 
                 // TODO : fix issued on new list
 
