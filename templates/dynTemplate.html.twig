@@ -24,15 +24,15 @@
         </header>
         <component v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
-                   v-bind:articles="articles[currentView]"
+                   v-bind:items="items[currentView]"
                    v-bind:connected="connected"
-                   v-on:to-parent-article-clicked="articleDelete"
-                   v-on:to-parent-form-submit="articleCreate">
+                   v-on:to-parent-item-clicked="itemDelete"
+                   v-on:to-parent-form-submit="itemCreate">
         </component>
         <footer class="bar">
-            <form id="" class="el" v-on:submit.prevent="articleCreate">
-                <input id="articleInput"
-                       v-model="articleInput"
+            <form id="" class="el" v-on:submit.prevent="itemCreate">
+                <input id="itemInput"
+                       v-model="itemInput"
                        v-bind:placeholder="placeHolder"
                        v-bind:style="focusStyle">
             </form>
@@ -40,7 +40,4 @@
         </footer>
     </div>
 {% endblock %}
-    {% block javascripts %}
-        {{ parent() }}
-        <script src="{{ asset('build/todo.js') }}"></script>
-    {% endblock %}
+

@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="page" data-initialArticles="{{ initialArticles }}" id="page_bloc">
+    <div class="page" data-initialItems="{{ initialItems }}" id="page_bloc">
         <list-component
             v-bind:place-holder="placeHolder"
-            v-bind:articles="articles"
+            v-bind:items="items"
             v-bind:connected="connected"
-            v-on:to-parent-article-clicked="articleDelete"
-            v-on:to-parent-form-submit="articleCreate"
+            v-on:to-parent-item-clicked="itemDelete"
+            v-on:to-parent-form-submit="itemCreate"
         ></list-component>
     </div>
 {% endblock %}

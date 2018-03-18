@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var wsServer = function () {
 
-        console.log('wsServer function called');
-
         var conn = new WebSocket('ws://localhost:8080');
 
         conn.onopen = function (e) {
@@ -14,14 +12,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             data = JSON.parse(ev.data);
 
-
             if (isNaN(data[0])) {
-                vm.incomingArticleAdd(data);
+                vm.incomingItemAdd(data);
             } else {
-                vm.articles[data[1]].forEach(function (article) {
+                vm.items[data[1]].forEach(function (item) {
 
-                    if (article.id == data[0]) {
-                        vm.incomingArticleRemove(vm.articles[data[1]].indexOf(article), data[1]);
+                    if (item.id == data[0]) {
+                        vm.incomingItemRemove(vm.items[data[1]].indexOf(item), data[1]);
                         return true;
                     }
 
@@ -61,12 +58,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     <h1 class="listName">{{ listName }}</h1>
                 </div>
             <div class="list_section">
-                <div class="article_list">
+                <div class="item_list">
                     <ul>
-                        <li v-for="(article, key) of articles" 
-                            v-bind:id="article.id"
-                            v-on:click="articleClicked">
-                                {{ article.name }}
+                        <li v-for="(item, key) of items" 
+                            v-bind:id="item.id"
+                            v-on:click="itemClicked">
+                                {{ item.name }}
                         </li>
                     </ul>
                 </div>
@@ -76,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `,
             props: [
                 'connected',
-                'articles',
+                'items',
             ],
             data() {
                 return {
@@ -84,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             methods: {
-                articleClicked(ev) {
-                    this.$emit('to-parent-article-clicked', ev.target.id);
+                itemClicked(ev) {
+                    this.$emit('to-parent-item-clicked', ev.target.id);
                 },
                 formSubmit() {
-                    this.$emit('to-parent-form-submit', this.articleInput);
+                    this.$emit('to-parent-form-submit', this.itemInput);
                 }
             }
         });
@@ -101,12 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
         delimiters: ['${', '}'],
         data: {
             connected: false,
-            articleInput: '',
+            itemInput: '',
             focusStyle: {
                 autofocus: 'autofocus'
             },
             placeHolder: 'Ajoutez...',
-            articles: lists,
+            items: lists,
             socketServer: 'NULL',
             componentsNames: names,
             nameIndex: 0,
@@ -114,24 +111,24 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         methods: {
             previousList() {
-                console.log("previous");
+
                 this.nameIndex--;
                 if (this.nameIndex == -1) {
                     this.nameIndex = names.length - 1;
                 }
-                console.log(this.nameIndex);
+
                 this.currentView = names[this.nameIndex];
             },
             nextList() {
-                console.log("next");
+
                 this.nameIndex++;
                 if (this.nameIndex == names.length) {
                     this.nameIndex = 0;
                 }
-                console.log(this.nameIndex);
+
                 this.currentView = names[this.nameIndex];
             },
-            articleDelete: function (id) {
+            itemDelete: function (id) {
                 axios.get(window.location.origin
                     + '/delete/item/'
                     + id)
@@ -139,32 +136,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 this.socketServer.send(JSON.stringify([id, this.currentView]));
             },
-            incomingArticleRemove: function (indx, listName) {
-                vm.articles[listName].splice(indx, 1);
+            incomingItemRemove: function (indx, listName) {
+                vm.items[listName].splice(indx, 1);
             },
-            articleCreate: function () {
+            itemCreate: function () {
                 axios.get(window.location.origin
                     + '/add/itemlist/'
                     + this.currentView
                     + '/'
-                    + this.articleInput)
+                    + this.itemInput)
                     .then(response => {
                         this.socketServer.send(JSON.stringify(response.data));
                     });
-                this.articleInput = '';
+                this.itemInput = '';
             },
-            incomingArticleAdd: function (article) {
+            incomingItemAdd: function (item) {
 
                 // TODO : fix issued on new list
 
-                if (this.articles[article['listName']] == undefined) {
+                if (this.items[item['listName']] == undefined) {
 
-                    this.articles[article['listName']] = article['listName'];
-                    this.articles[article['listName'][0]] = {'id': article['articleId'], 'name': article['articleName']}
+                    this.items[item['listName']] = item['listName'];
+                    this.items[item['listName'][0]] = {'id': item['itemId'], 'name': item['itemName']}
                 } else {
-                    this.articles[article['listName']].push({
-                        'id': article['articleId'],
-                        'name': article['articleName']
+                    this.items[item['listName']].push({
+                        'id': item['itemId'],
+                        'name': item['itemName']
                     });
                 }
             }

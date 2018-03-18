@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/add/itemlist/{name}/{articleName}")
+     * @Route("/add/itemlist/{name}/{itemName}")
      */
-    public function add(ItemList $list, $articleName)
+    public function add(ItemList $list, $itemName)
     {
         $em = $this->getDoctrine()->getManager();
 
         $item = new Item();
-        $item->setName($articleName);
+        $item->setName($itemName);
         $list->addItem($item);
 
         $em->persist($list);
@@ -26,8 +26,8 @@ class ItemController extends AbstractController
 
         return new Response(json_encode([
             'listName' => $list->getName(),
-            'articleName' => $item->getName(),
-            'articleId' => $item->getId()
+            'itemName' => $item->getName(),
+            'itemId' => $item->getId()
         ]));
     }
     /**
@@ -41,7 +41,7 @@ class ItemController extends AbstractController
         $em->flush();
 
         return new Response(json_encode([
-            'articleId' => $item->getId()
+            'itemId' => $item->getId()
         ]));
     }
 
