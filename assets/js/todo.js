@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
+import Vue from 'vue';
+import axios from 'axios';
+
 
     var wsServer = function () {
 
@@ -9,8 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('connected')
         };
         conn.onmessage = (ev) => {
-
-            data = JSON.parse(ev.data);
+            var data = JSON.parse(ev.data);
 
             if (isNaN(data[0])) {
                 vm.incomingItemAdd(data);
@@ -172,5 +173,4 @@ document.addEventListener('DOMContentLoaded', function () {
             this.currentView = names[this.nameIndex]
         }
     });
-});
 

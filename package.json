@@ -11,12 +11,13 @@
         "build": "encore production"
     },
     "dependencies": {
+        "axios": "^0.18.0",
         "node-sass": "^4.7.2",
         "sass": "^1.0.0-beta.5.2",
         "sass-loader": "^6.0.6",
-        "vue": "^2.5.13",
+        "vue": "^2.5.16",
         "vue-loader": "^14.1.1",
-        "vue-template-compiler": "^2.5.13",
+        "vue-template-compiler": "^2.5.16",
         "vue-template-loader": "^0.4.0",
         "webpack-notifier": "^1.5.1"
     }
