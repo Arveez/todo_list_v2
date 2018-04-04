@@ -5,38 +5,48 @@
          data-list_names="{{ listNames|json_encode }}"
          id="page_bloc">
 
-
         <header class="bar">
             <div id="header_top">
                 <div class="corner">
-                    <span v-if="connected == true" class="plug fa fa-2x fa-plug"></span>
+                    <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
                     <span v-else>bop</span>
                 </div>
                 <h1>TooDoo</h1>
-                <div class="corner menu ">
-                    <span class="fa fa-2x fa-bars"></span>
+                <div v-on:click="menuToggle" class="corner menu ">
+                    <span class="fa fa-2x fa-plus"></span>
                 </div>
             </div>
             <div id="arrows">
                 <p v-on:click="previousList" id="left"><<</p>
                 <p v-on:click="nextList" id="right">>></p>
             </div>
+            <div v-if="openMenu">
+                <h2>Nouvelle liste</h2>
+                <div>
+                    {{ form_start(newListForm) }}
+                    {{ form_widget(newListForm) }}
+                    {{ form_end(newListForm) }}
+                </div>
+            </div>
         </header>
-        <component v-bind:is="currentView"
+        <component v-if="openMenu === false"
+                   v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
                    v-bind:items="items[currentView]"
                    v-bind:connected="connected"
                    v-on:to-parent-item-clicked="itemDelete"
-                   v-on:to-parent-form-submit="itemCreate">
+                   v-on:to-parent-form-submit="itemCreate"
+                   v-on:to-parent-cross-clicked="listDelete"
+        >
         </component>
-        <footer class="bar">
-            <form id="" class="el" v-on:submit.prevent="itemCreate">
+        <footer v-if="openMenu === false" class="bar">
+            <form id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
                 <input id="itemInput"
                        v-model="itemInput"
                        v-bind:placeholder="placeHolder"
                        v-bind:style="focusStyle">
+                <input type="submit" value="+">
             </form>
-            <span id="resetCross" class="el  fa fa-3x fa-times"></span>
         </footer>
     </div>
 {% endblock %}

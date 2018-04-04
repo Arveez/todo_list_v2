@@ -26,6 +26,7 @@ import axios from 'axios';
         <div class="component">
                 <div class="main_title">
                     <h1 class="listName">{{ listName }}</h1>
+                    <p v-on:click="crossClicked"><span  class="fa fa-2x fa-times"></span></p>
                 </div>
             <div class="list_section">
                 <div class="item_list">
@@ -51,6 +52,9 @@ import axios from 'axios';
                 }
             },
             methods: {
+                crossClicked() {
+                    this.$emit('to-parent-cross-clicked')
+                },
                 itemClicked(ev) {
                     this.$emit('to-parent-item-clicked', ev.target.id);
                 },
@@ -81,8 +85,12 @@ import axios from 'axios';
             currentView: names[this.nameIndex],
         },
         methods: {
+            listDelete() {
+                window.location.href = window.location + 'list/delete/' + this.currentView;
+                console.log('delete');
+            },
             menuToggle()  {
-                if (this.openMenu == false) {
+                if (this.openMenu === false) {
                     this.openMenu = true;
                 } else {
                     this.openMenu = false;
@@ -91,7 +99,7 @@ import axios from 'axios';
             previousList() {
 
                 this.nameIndex--;
-                if (this.nameIndex == -1) {
+                if (this.nameIndex === -1) {
                     this.nameIndex = names.length - 1;
                 }
 
@@ -100,7 +108,7 @@ import axios from 'axios';
             nextList() {
 
                 this.nameIndex++;
-                if (this.nameIndex == names.length) {
+                if (this.nameIndex === names.length) {
                     this.nameIndex = 0;
                 }
 
@@ -132,7 +140,7 @@ import axios from 'axios';
 
                 // TODO : fix issued on new list
 
-                if (this.items[item['listName']] == undefined) {
+                if (this.items[item['listName']] === undefined) {
 
                     this.items[item['listName']] = item['listName'];
                     this.items[item['listName'][0]] = {'id': item['itemId'], 'name': item['itemName']}

@@ -1,9 +1,0 @@
-<pre>
-    {#{{ dump(lists) }}#}
-</pre>
-{% for key, list in lists %}
-    <p>liste : {{ key }}</p>
-    {% for item in list %}
-        <p>{{ item.id }} => {{ item.name }}</p>
-    {% endfor %}
-{% endfor %}

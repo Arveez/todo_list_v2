@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
+use App\Form\ItemListType;
 use App\Repository\ItemListRepository;
 use App\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\ItemList;
 
 class DefaultController extends Controller
 {
     /**
      * @param ItemRepository $repository
-     * @Route("/")
+     * @Route("/", name="home")
      */
     public function index(ItemListRepository $repository): Response
     {
@@ -33,9 +37,16 @@ class DefaultController extends Controller
                 $refactoredLists[$name][$i]['name'] = $itemsArray[$i]->getName();
             }
         }
+
+        $itemList = new ItemList();
+        $newListForm = $this->createForm(ItemListType::class, $itemList, array(
+            'action' => $this->generateUrl("list_create")
+        ));
+
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
-            'listNames' => $listNames
+            'listNames' => $listNames,
+            'newListForm' => $newListForm->createView()
         ]));
     }
 }
