@@ -49,4 +49,13 @@ class DefaultController extends Controller
             'newListForm' => $newListForm->createView()
         ]));
     }
+
+    /**
+     * @return Response
+     * @Route("/admin", name="admin")
+     */
+    public function admin()
+    {
+        return new Response("admin");
+    }
 }
