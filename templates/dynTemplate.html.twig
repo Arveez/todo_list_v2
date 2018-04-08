@@ -11,7 +11,13 @@
                     <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
                     <span v-else>bop</span>
                 </div>
-                <h1>TooDoo</h1>
+                <div id="title">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <h1>{{ app.user.username }}'s</h1>
+                    {% else %}
+                        <h1>TooDoo</h1>
+                    {% endif %}
+                </div>
                 <div v-on:click="menuToggle" class="corner menu ">
                     <span class="fa fa-2x fa-plus"></span>
                 </div>
