@@ -30,7 +30,9 @@ class ItemListController extends Controller
         $manager->persist($list);
         $manager->flush();
 
-        return new Response($this->redirectToRoute("home"));
+        return new Response($this->redirectToRoute("home", array(
+            'currentView' => $list->getName()
+        )));
     }
 
     /**
@@ -46,6 +48,7 @@ class ItemListController extends Controller
         ));
         $manager->remove($list);
         $manager->flush();
+
 
         return new Response($this->redirectToRoute("home"));
     }

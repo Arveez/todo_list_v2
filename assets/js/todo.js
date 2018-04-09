@@ -86,8 +86,7 @@ import axios from 'axios';
         },
         methods: {
             listDelete() {
-                window.location.href = window.location + 'list/delete/' + this.currentView;
-                console.log('delete');
+                window.location.href = window.location.origin + '/list/delete/' + this.currentView;
             },
             menuToggle()  {
                 if (this.openMenu === false) {
@@ -155,7 +154,11 @@ import axios from 'axios';
         },
         mounted() {
             this.socketServer = wsServer(this);
-            this.currentView = names[this.nameIndex]
+            
+            let currentViewInUrl = window.location.pathname.split('/');
+            this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
+
+
         }
     });
 
