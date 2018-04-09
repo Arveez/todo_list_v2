@@ -3,24 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Item;
-use App\Entity\ItemList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\ItemListRepository;
 
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/add/itemlist/{listName}/{itemName}")
+     * @Route("/add/{listName}/{itemName}")
      */
-    public function add($listName, $itemName)
+    public function add($listName, $itemName, ItemListRepository $repository)
     {
         $em = $this->getDoctrine()->getManager();
 
         $item = new Item();
         $item->setName($itemName);
 
-        $list = $em->getRepository(ItemList::class)->findOneBy(array(
+        $list = $repository->findOneBy(array(
             'name' => $listName,
             'owner' => $this->getUser()
             ));

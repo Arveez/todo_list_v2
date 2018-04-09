@@ -127,7 +127,7 @@ import axios from 'axios';
             },
             itemCreate: function () {
                 axios.get(window.location.origin
-                    + '/add/itemlist/'
+                    + '/add/'
                     + this.currentView
                     + '/'
                     + this.itemInput)
