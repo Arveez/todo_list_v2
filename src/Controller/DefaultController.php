@@ -20,7 +20,7 @@ class DefaultController extends Controller
      */
     public function index(ItemListRepository $repository): Response
     {
-        $lists = $repository->findAll();
+        $lists = $repository->findAllByOwner($this->getUser());
         $refactoredLists = [];
         $listNames = [];
         foreach ($lists as $list) {

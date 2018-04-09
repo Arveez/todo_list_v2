@@ -12,6 +12,14 @@ class ItemListRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ItemList::class);
     }
+    public function findAllByOwner($owner)
+    {
+        return $this->createQueryBuilder('il')
+            ->where('il.owner = :owner')->setParameter('owner',$owner)
+            ->orderBy('il.name')
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findBySomething($value)

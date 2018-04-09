@@ -11,14 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/add/itemlist/{name}/{itemName}")
+     * @Route("/add/itemlist/{listName}/{itemName}")
      */
-    public function add(ItemList $list, $itemName)
+    public function add($listName, $itemName)
     {
         $em = $this->getDoctrine()->getManager();
 
         $item = new Item();
         $item->setName($itemName);
+
+        $list = $em->getRepository(ItemList::class)->findOneBy(array(
+            'name' => $listName,
+            'owner' => $this->getUser()
+            ));
         $list->addItem($item);
 
         $em->persist($list);

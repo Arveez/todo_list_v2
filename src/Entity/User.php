@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,6 +35,27 @@ class User implements UserInterface, \Serializable
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ItemList", mappedBy="owner")
+     */
+    private $lists;
+
+    /**
+     * @return mixed
+     */
+    public function getLists()
+    {
+        return $this->lists;
+    }
+
+    /**
+     * @param mixed $lists
+     */
+    public function setLists($lists): void
+    {
+        $this->lists = $lists;
+    }
 
     /**
      * @return mixed
@@ -117,6 +139,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->lists = new ArrayCollection();
     }
     public function getSalt()
     {

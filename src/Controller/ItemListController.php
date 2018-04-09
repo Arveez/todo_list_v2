@@ -23,6 +23,7 @@ class ItemListController extends Controller
         if ($form->isValid()) {
             $list = $form->getData();
         }
+        $list->setOwner($this->getUser());
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($list);
