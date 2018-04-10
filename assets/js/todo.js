@@ -18,6 +18,7 @@ import axios from 'axios';
             'data-lists'
         )
     );
+    console.log(lists);
 
     names.forEach( (name) => {
 
