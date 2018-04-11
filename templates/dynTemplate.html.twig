@@ -6,26 +6,20 @@
          id="page_bloc">
 
         <header class="bar">
-            <div id="header_top">
-                <div class="corner">
-                    <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
-                    <span v-else>bop</span>
-                </div>
-                <div id="title">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <h1>{{ app.user.username }}'s</h1>
-                    {% else %}
-                        <h1>TooDoo</h1>
-                    {% endif %}
-                </div>
-                <div v-on:click="menuToggle" class="corner menu ">
-                    <span class="fa fa-2x fa-plus"></span>
-                </div>
+            <div class="corner">
+                <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
+                <span v-else>bop</span>
             </div>
-            <div id="arrows">
-                <p v-on:click="previousList" id="left"><<</p>
-                <p v-on:click="nextList" id="right">>></p>
+            <div id="title">
+                    <h1>{{ app.user.username }}'s</h1>
             </div>
+            <div v-on:click="menuToggle" class="corner menu ">
+                <span class="fa fa-2x fa-plus"></span>
+            </div>
+            {#<div id="arrows">#}
+            {#<p v-on:click="previousList" id="left"><<</p>#}
+            {#<p v-on:click="nextList" id="right">>></p>#}
+            {#</div>#}
             <div v-if="openMenu">
                 <h2>Nouvelle liste</h2>
                 <div>
@@ -42,8 +36,7 @@
                    v-bind:connected="connected"
                    v-on:to-parent-item-clicked="itemDelete"
                    v-on:to-parent-form-submit="itemCreate"
-                   v-on:to-parent-cross-clicked="listDelete"
-        >
+                   v-on:to-parent-cross-clicked="listDelete">
         </component>
         <footer v-if="openMenu === false" class="bar">
             <form id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
