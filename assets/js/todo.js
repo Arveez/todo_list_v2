@@ -29,6 +29,10 @@ names.forEach((name) => {
                     <h1 class="listName">{{ listName }}</h1>
                     <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt"></span></p>
                 </div>
+                <div class="arrows">
+                    <p v-on:click="leftClicked" id="left"><<</p>
+                    <p v-on:click="rightClicked" id="right">>></p>
+                </div>
                 <div class="item_list">
                     <ul>
                         <li v-for="(item, key) of items" 
@@ -51,6 +55,12 @@ names.forEach((name) => {
             }
         },
         methods: {
+            leftClicked() {
+                this.$emit('to-parent-left-clicked')
+            },
+            rightClicked() {
+                this.$emit('to-parent-right-clicked')
+            },
             crossClicked() {
                 this.$emit('to-parent-cross-clicked')
             },

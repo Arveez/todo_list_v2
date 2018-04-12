@@ -11,15 +11,12 @@
                 <span v-else>bop</span>
             </div>
             <div id="title">
-                    <h1>{{ app.user.username }}'s</h1>
+                <h1>{{ app.user.username }}'s</h1>
             </div>
             <div v-on:click="menuToggle" class="corner menu ">
                 <span class="fa fa-2x fa-plus"></span>
             </div>
-            {#<div id="arrows">#}
-            {#<p v-on:click="previousList" id="left"><<</p>#}
-            {#<p v-on:click="nextList" id="right">>></p>#}
-            {#</div>#}
+
             <div v-if="openMenu">
                 <h2>Nouvelle liste</h2>
                 <div>
@@ -36,7 +33,11 @@
                    v-bind:connected="connected"
                    v-on:to-parent-item-clicked="itemDelete"
                    v-on:to-parent-form-submit="itemCreate"
-                   v-on:to-parent-cross-clicked="listDelete">
+                   v-on:to-parent-cross-clicked="listDelete"
+                   v-on:to-parent-left-clicked="previousList"
+                   v-on:to-parent-right-clicked="nextList"
+
+        >
         </component>
         <footer v-if="openMenu === false" class="bar">
             <form id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
