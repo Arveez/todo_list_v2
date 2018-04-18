@@ -13,19 +13,20 @@
             <div id="title">
                 <h1>{{ app.user.username }}'s</h1>
             </div>
-            <div v-on:click="menuToggle" class="corner menu ">
+            <div v-on:click="menuToggle" id="plus" class="corner menu ">
                 <span class="fa fa-2x fa-plus"></span>
             </div>
 
-            <div v-if="openMenu">
-                <h2>Nouvelle liste</h2>
-                <div>
-                    {{ form_start(newListForm) }}
-                    {{ form_widget(newListForm) }}
-                    {{ form_end(newListForm) }}
-                </div>
-            </div>
         </header>
+
+        <div class="middle-form" v-if="openMenu">
+            <h2>Nouvelle liste</h2>
+            <div>
+                {{ form_start(newListForm) }}
+                {{ form_widget(newListForm) }}
+                {{ form_end(newListForm) }}
+            </div>
+        </div>
         <component v-if="openMenu === false"
                    v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
@@ -39,7 +40,7 @@
 
         >
         </component>
-        <footer v-if="openMenu === false" class="bar">
+        <footer v-if="items.length !== 0" class="">
             <form id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
                 <input id="itemInput"
                        v-model="itemInput"
