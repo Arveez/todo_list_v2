@@ -1,11 +1,37 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
+    <div class="page">
+        <header>
+            <div id="title">
+                <h1>TooDoo</h1>
+            </div>
+        </header>
+        <div>
+            {{ form_start(form) }}
+            <div class="middle-form">
 
-    <button type="submit">Register!</button>
-    {{ form_end(form) }}
+                <div class="form-field">
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="form-field">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="form-field">
+                    {{ form_row(form.plainPassword.first) }}
+                </div>
+                <div class="form-field">
+                    {{ form_row(form.plainPassword.second) }}
+                </div>
+                <div class="user-form-button">
+                    <button type="submit">Go !</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="footer-button">
+            <h2 class="footer-title">
+                <a href="{{ path('login') }}">Retour</a>
+            </h2>
+        </div>
+    </div>
 {% endblock %}

@@ -10,7 +10,7 @@
                 <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
                 <span v-else>bop</span>
             </div>
-            <div id="title">
+            <div>
                 <h1>{{ app.user.username }}'s</h1>
             </div>
             <div v-on:click="menuToggle" id="plus" class="corner menu ">
@@ -19,12 +19,14 @@
 
         </header>
 
-        <div class="middle-form" v-if="openMenu">
-            <h2>Nouvelle liste</h2>
-            <div>
-                {{ form_start(newListForm) }}
-                {{ form_widget(newListForm) }}
-                {{ form_end(newListForm) }}
+        <div v-if="openMenu">
+            <div  class="middle-form">
+                <h2>Nouvelle liste</h2>
+                <div>
+                    {{ form_start(newListForm) }}
+                    {{ form_widget(newListForm) }}
+                    {{ form_end(newListForm) }}
+                </div>
             </div>
         </div>
         <component v-if="openMenu === false"

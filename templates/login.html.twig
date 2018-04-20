@@ -1,23 +1,37 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block body %}
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+    <div class="page">
+        <header>
+            <div id="title">
+                <h1>TooDoo</h1>
+            </div>
+        </header>
+        <div>
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            <form class="middle-form action="{{ path('login') }} method="post">
+                <div class="form-field">
+                    <input type="text"
+                           id="username"
+                           name="_username"
+                           placeholder="Nom"
+                           autofocus="autofocus"/>
+                </div>
+                <div class="form-field">
+                    <input type="password" id="password" name="_password" placeholder="Mot de passe"/>
+                </div>
+                <div class="user-form-button">
+                    <button type="submit">Go !</button>
+                </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
-
-    <button type="submit">login</button>
-</form>
-<a href="{{ path('user_registration') }}">New User</a>
+            </form>
+        </div>
+        <div class="footer-button">
+            <h2 class="footer-title">
+                <a href="{{ path('user_registration') }}">Première visite ?</a>
+            </h2>
+        </div>
+    </div>
 {% endblock %}
