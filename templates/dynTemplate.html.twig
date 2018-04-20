@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="page"
+    <div  class="page"
          data-lists="{{ lists|json_encode }}"
          data-list_names="{{ listNames|json_encode }}"
          id="page_bloc">
 
-        <header class="bar">
+        <header v-if="mounted" class="bar">
             <div class="corner">
                 <span v-if="connected === true" class="plug fa fa-2x fa-plug"></span>
                 <span v-else>bop</span>
@@ -19,17 +19,17 @@
 
         </header>
 
-        <div v-if="openMenu">
+        <div v-if="openMenu || items.length === 0">
             <div  class="middle-form">
                 <h2>Nouvelle liste</h2>
                 <div>
                     {{ form_start(newListForm) }}
-                    {{ form_widget(newListForm) }}
+                    {{ form_widget(newListForm.name) }}
                     {{ form_end(newListForm) }}
                 </div>
             </div>
         </div>
-        <component v-if="openMenu === false"
+        <component v-else
                    v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
                    v-bind:items="items[currentView]"
@@ -42,12 +42,12 @@
 
         >
         </component>
-        <footer v-if="items.length !== 0" class="">
-            <form id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
+        <footer class="">
+            <form  id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
                 <input id="itemInput"
                        v-model="itemInput"
                        v-bind:placeholder="placeHolder"
-                       v-bind:style="focusStyle">
+                       >
                 <input type="submit" value="+">
             </form>
         </footer>

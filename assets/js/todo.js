@@ -42,7 +42,6 @@ names.forEach((name) => {
                         </li>
                     </ul>
                 </div>
-
         </div>
         `,
         props: [
@@ -80,12 +79,13 @@ var vm = new Vue({
     el: '#page_bloc',
     delimiters: ['${', '}'],
     data: {
+        focusStyle : {
+            autofocus: 'autofocus'
+        },
+        mounted: false,
         openMenu: false,
         connected: false,
         itemInput: '',
-        focusStyle: {
-            autofocus: 'autofocus'
-        },
         placeHolder: 'Ajoutez...',
         items: lists,
         socketServer: 'NULL',
@@ -166,6 +166,7 @@ var vm = new Vue({
         console.log(this.items.length);
         let currentViewInUrl = window.location.pathname.split('/');
         this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
+        this.mounted = true;
 
 
     }
