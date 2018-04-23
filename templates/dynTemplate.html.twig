@@ -24,7 +24,7 @@
         <div v-if="openMenu || noList">
             <div  class="middle-form">
                 <h2>Nouvelle liste</h2>
-                <div>
+                <div v-on:submit.prevent="listAdd">
                     {{ form_start(newListForm) }}
                     {{ form_widget(newListForm.name) }}
                     {{ form_end(newListForm) }}

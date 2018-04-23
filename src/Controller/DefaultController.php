@@ -50,9 +50,7 @@ class DefaultController extends Controller
         }
 
         $itemList = new ItemList();
-        $newListForm = $this->createForm(ItemListType::class, $itemList, array(
-            'action' => $this->generateUrl("list_add")
-        ));
+        $newListForm = $this->createForm(ItemListType::class, $itemList);
 
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,

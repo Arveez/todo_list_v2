@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ItemList;
 use App\Form\ItemListType;
 use App\Repository\ItemListRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,26 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemListController extends Controller
 {
     /**
-     * @Route("/itemList/add", name="list_add")
+     * @Route("/itemList/add/{listName}", name="list_add")
      */
-    public function createList(Request $request)
+    public function createList($listName)
     {
         $list = new ItemList();
-        $form = $this->createForm(ItemListType::class, $list);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $list = $form->getData();
-
+            $list->setName($listName);
             $list->setOwner($this->getUser());
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($list);
             $manager->flush();
-        }
-        return new Response($this->redirectToRoute("home", array(
-            'currentView' => $list->getName()
-        )));
+
+        return new Response($listName);
     }
 
     /**

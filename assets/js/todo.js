@@ -99,6 +99,14 @@ var vm = new Vue({
         listDelete() {
             window.location.href = window.location.origin + '/itemList/delete/' + this.currentView;
         },
+        listAdd(e) {
+            axios.put(window.location.origin
+                + '/itemList/add/'
+                + e.target[0].value
+            ).then((response) => {});
+            console.log(e.target[0].value);
+            this.socketServer.send(JSON.stringify(e.target[0].value));
+        },
         menuToggle() {
             if (this.openMenu === false) {
                 this.openMenu = true;
@@ -124,7 +132,7 @@ var vm = new Vue({
             this.currentView = names[this.nameIndex];
         },
         itemDelete(id) {
-            axios.get(window.location.origin
+            axios.put(window.location.origin
                 + '/item/delete/item/'
                 + id)
                 .then((response) => {
@@ -132,7 +140,7 @@ var vm = new Vue({
             this.socketServer.send(JSON.stringify([id, this.currentView]));
         },
         itemCreate: function () {
-            axios.get(window.location.origin
+            axios.put(window.location.origin
                 + '/item/add/'
                 + this.currentView
                 + '/'
