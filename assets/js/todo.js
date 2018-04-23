@@ -97,7 +97,12 @@ var vm = new Vue({
     },
     methods: {
         listDelete() {
-            window.location.href = window.location.origin + '/itemList/delete/' + this.currentView;
+            axios.put(window.location.origin
+                + '/itemList/delete/'
+                + this.currentView
+            ).then(() => {
+               this.socketServer.send(JSON.stringify('reload'));
+            });
         },
         listAdd(e) {
             axios.put(window.location.origin

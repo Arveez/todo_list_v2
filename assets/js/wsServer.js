@@ -8,12 +8,16 @@ module.exports = (vm) =>{
     };
     conn.onmessage = (ev) => {
         var data = JSON.parse(ev.data);
+
+        if (data === "reload") {
+            window.location.href = window.location.origin + '/home';
+        } else
+
         if (typeof data === "string") {
             console.log(window.location);
             window.location.href = window.location.origin + '/home/' + data;
-
-
         }
+
         if (isNaN(data[0])) {
             vm.incomingItemAdd(data);
         } else {
