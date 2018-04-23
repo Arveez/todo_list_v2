@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemListRepository")
@@ -26,6 +26,11 @@ class ItemList
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Regex(
+     *     pattern="#^[a-zA-Z0-9]+$#",
+     *     message="Caractères alphanumériques seulement"
+     * )
+     *
      */
     private $name;
 

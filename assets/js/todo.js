@@ -79,19 +79,21 @@ var vm = new Vue({
     el: '#page_bloc',
     delimiters: ['${', '}'],
     data: {
-        focusStyle : {
-            autofocus: 'autofocus'
-        },
-        mounted: false,
         openMenu: false,
         connected: false,
         itemInput: '',
         placeHolder: 'Ajoutez...',
         items: lists,
+        noList: '',
         socketServer: 'NULL',
         componentsNames: names,
         nameIndex: 0,
         currentView: names[this.nameIndex],
+    },
+    watch: {
+        connected: function () {
+            console.log('connnect change');
+        }
     },
     methods: {
         listDelete() {
@@ -163,10 +165,11 @@ var vm = new Vue({
     },
     mounted() {
         this.socketServer = wsServer(this);
-        console.log(this.items.length);
         let currentViewInUrl = window.location.pathname.split('/');
         this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
-        this.mounted = true;
+        this.noList =  this.items.length === 0;
+        console.log(this.noList);
+
 
 
     }

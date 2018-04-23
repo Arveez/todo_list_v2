@@ -23,13 +23,13 @@ class ItemListController extends Controller
 
         if ($form->isValid()) {
             $list = $form->getData();
+
+            $list->setOwner($this->getUser());
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($list);
+            $manager->flush();
         }
-        $list->setOwner($this->getUser());
-
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($list);
-        $manager->flush();
-
         return new Response($this->redirectToRoute("home", array(
             'currentView' => $list->getName()
         )));

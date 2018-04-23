@@ -3,8 +3,11 @@ $orange: #FFB939;
 body {
   background-color: lightgoldenrodyellow;
   color: $orange;
-}
 
+}
+* {
+
+}
 .page {
   height: 98vh;
   max-width: 500px;
@@ -20,6 +23,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: $orange;
 }
 ul {
   list-style-type: none;
@@ -74,6 +78,9 @@ footer{
 #plus:hover {
   color: black;
   background-color: $orange;
+}
+#plus {
+  padding: 5px;
 }
 
 .middle-form {
