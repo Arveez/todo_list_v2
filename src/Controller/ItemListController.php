@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemListController extends Controller
 {
     /**
-     * @Route("/list/create", name="list_create")
+     * @Route("/itemList/add", name="list_add")
      */
     public function createList(Request $request)
     {
@@ -37,7 +37,7 @@ class ItemListController extends Controller
 
     /**
      * @param $name
-     * @Route("/list/delete/{name}", name="list_delete")
+     * @Route("/itemList/delete/{name}", name="list_delete")
      */
     public function deleteList($name, ItemListRepository $repository)
     {

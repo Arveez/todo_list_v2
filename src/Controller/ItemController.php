@@ -11,7 +11,7 @@ use App\Repository\ItemListRepository;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/add/{listName}/{itemName}")
+     * @Route("/item/add/{listName}/{itemName}", name="item_add")
      */
     public function add($listName, $itemName, ItemListRepository $repository)
     {
@@ -36,7 +36,7 @@ class ItemController extends AbstractController
         ]));
     }
     /**
-     * @Route("/delete/item/{id}")
+     * @Route("/item/delete/item/{id}", name="item_delete")
      */
     public function delete(Item $item)
     {

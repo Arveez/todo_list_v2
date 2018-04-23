@@ -97,7 +97,7 @@ var vm = new Vue({
     },
     methods: {
         listDelete() {
-            window.location.href = window.location.origin + '/list/delete/' + this.currentView;
+            window.location.href = window.location.origin + '/itemList/delete/' + this.currentView;
         },
         menuToggle() {
             if (this.openMenu === false) {
@@ -116,7 +116,6 @@ var vm = new Vue({
             this.currentView = names[this.nameIndex];
         },
         nextList() {
-
             this.nameIndex++;
             if (this.nameIndex === names.length) {
                 this.nameIndex = 0;
@@ -126,18 +125,15 @@ var vm = new Vue({
         },
         itemDelete(id) {
             axios.get(window.location.origin
-                + '/delete/item/'
+                + '/item/delete/item/'
                 + id)
                 .then((response) => {
                 });
             this.socketServer.send(JSON.stringify([id, this.currentView]));
         },
-        incomingItemRemove(indx, listName) {
-            vm.items[listName].splice(indx, 1);
-        },
         itemCreate: function () {
             axios.get(window.location.origin
-                + '/add/'
+                + '/item/add/'
                 + this.currentView
                 + '/'
                 + this.itemInput)
@@ -146,10 +142,10 @@ var vm = new Vue({
                 });
             this.itemInput = '';
         },
+        incomingItemRemove(indx, listName) {
+            vm.items[listName].splice(indx, 1);
+        },
         incomingItemAdd(item) {
-
-            // TODO : fix issued on new list
-
             if (this.items[item['listName']] === undefined) {
 
                 this.items[item['listName']] = item['listName'];
@@ -168,10 +164,6 @@ var vm = new Vue({
         let currentViewInUrl = window.location.pathname.split('/');
         this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
         this.noList =  this.items.length === 0;
-        console.log(this.noList);
-
-
-
     }
 });
 
