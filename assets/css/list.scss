@@ -49,9 +49,14 @@ header {
   overflow: scroll;
 }
 footer{
+
   padding: 2%;
   display: flex;
   align-content: center;
+
+
+
+
 }
 
 #itemAddForm {
@@ -77,6 +82,7 @@ footer{
 }
 .arrow {
   padding: 5px;
+  z-index: 1;
 }
 #plus:hover, .arrow:hover {
   color: black;
@@ -103,5 +109,11 @@ footer{
 }
 .footer-button a {
   color: $orange;
+}
+.item_list {
+  height: 60vh;
+  overflow: scroll;
+  position: relative;
+  top: -74px;
 }
 
