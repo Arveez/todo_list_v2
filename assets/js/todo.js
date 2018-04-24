@@ -30,8 +30,8 @@ names.forEach((name) => {
                     <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt"></span></p>
                 </div>
                 <div class="arrows">
-                    <p v-on:click="leftClicked" id="left"><<</p>
-                    <p v-on:click="rightClicked" id="right">>></p>
+                    <p v-on:click="leftClicked" class="arrow" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
+                    <p v-on:click="rightClicked" class="arrow" id="right"><span class="fa fa-2x fa-arrow-right"></span></p>
                 </div>
                 <div class="item_list">
                     <ul>

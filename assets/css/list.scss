@@ -75,7 +75,10 @@ footer{
   position: relative;
   top: 30%;
 }
-#plus:hover {
+.arrow {
+  padding: 5px;
+}
+#plus:hover, .arrow:hover {
   color: black;
   background-color: $orange;
 }
