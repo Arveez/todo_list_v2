@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
+import Vue2TouchEvents from 'vue2-touch-events';
+Vue.use(Vue2TouchEvents);
 
 
 var wsServer = require('./wsServer');
@@ -24,13 +26,15 @@ names.forEach((name) => {
 
     Vue.component(name, {
         template: `
-        <div class="component">
+        <div  class="component"
+            v-touch:swipe.left="leftClicked"
+            v-touch:swipe.right="rightClicked">
                 <div class="main_title">
                     <h1 class="listName">{{ listName }}</h1>
                     <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt"></span></p>
                 </div>
                 <div class="arrows">
-                    <p v-on:click="leftClicked" class="arrow" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
+                    <p v-on:click="leftClicked"  class="arrow" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
                     <p v-on:click="rightClicked" class="arrow" id="right"><span class="fa fa-2x fa-arrow-right"></span></p>
                 </div>
                 <div class="item_list">
