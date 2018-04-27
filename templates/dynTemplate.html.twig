@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div  class="page"
+    <div class="page"
          data-lists="{{ lists|json_encode }}"
          data-list_names="{{ listNames|json_encode }}"
          id="page_bloc">
@@ -22,7 +22,7 @@
         </header>
 
         <div v-if="openMenu || noList">
-            <div  class="middle-form">
+            <div class="middle-form">
                 <h2>Nouvelle liste</h2>
                 <div v-on:submit.prevent="listAdd">
                     {{ form_start(newListForm) }}
@@ -49,9 +49,11 @@
 
                 <input
                         id="itemInput"
-                       v-model="itemInput"
-                       v-bind:placeholder="placeHolder"
-                       >
+                        v-model="itemInput"
+                        v-bind:placeholder="placeHolder"
+                        pattern="[éèçà'a-zA-Z0-9]+"
+                        title="Caractères alphanumériques"
+                >
                 <input type="submit" value="+">
             </form>
         </footer>

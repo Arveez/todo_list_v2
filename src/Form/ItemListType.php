@@ -21,7 +21,11 @@ class ItemListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => false))
+            ->add('name', TextType::class, array(
+                'label' => false ,
+                'attr' => array(
+                    'pattern' => '[a-zA-Z]{1}[a-zA-Z0-9]+',
+                    'title' => 'Caractères alphanumériques; commençant par une lettre')))
             ->add('save', SubmitType::class, array('label' => 'Ajouter'));
 
     }
