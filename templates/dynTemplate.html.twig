@@ -5,8 +5,8 @@
          data-list_names="{{ listNames|json_encode }}"
          id="page_bloc">
 
-        <header class="bar">
-            <div class="corner">
+        <header>
+            <div>
                 <span v-if="connected" class="plug fa fa-2x fa-plug"></span>
                 <span v-else>
                     <a href="{{ path('home') }}"><span class="fa fa-2x fa-sync"></span> </a>
@@ -15,14 +15,14 @@
             <div>
                 <h1><a href="{{ path('home') }}">{{ app.user.username }}'s</a></h1>
             </div>
-            <div v-on:click="menuToggle" id="plus" class="corner menu ">
+            <div v-on:click="menuToggle" class="plus hoverable">
                 <span class="fa fa-2x fa-plus"></span>
             </div>
 
         </header>
 
         <div v-if="openMenu || noList">
-            <div class="middle-form">
+            <div id="listAddForm" class="middle-form">
                 <h2>Nouvelle liste</h2>
                 <div v-on:submit.prevent="listAdd">
                     {{ form_start(newListForm) }}
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <component v-else
+        <section v-else
                    v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
                    v-bind:items="items[currentView]"
@@ -43,10 +43,9 @@
                    v-on:to-parent-right-clicked="nextList"
 
         >
-        </component>
+        </section>
         <footer class="">
-            <form v-if="!noList" id="itemAddForm" class="el" v-on:submit.prevent="itemCreate">
-
+            <form v-if="!noList" class="itemAddForm" v-on:submit.prevent="itemCreate">
                 <input
                         id="itemInput"
                         v-model="itemInput"

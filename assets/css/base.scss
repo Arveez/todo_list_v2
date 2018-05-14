@@ -1,0 +1,19 @@
+body {
+  background-color: $main-background-color;
+  color: $font-color;
+}
+
+.hoverable {
+  padding: 5px;
+  &:hover {
+    @include hover($element-background-color, $font-color);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $font-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -26,16 +26,16 @@ names.forEach((name) => {
 
     Vue.component(name, {
         template: `
-        <div  class="component"
+        <section  class="component"
             v-touch:swipe.left="leftClicked"
             v-touch:swipe.right="rightClicked">
-                <div class="main_title">
+                <div class="list_title">
                     <h1 class="listName">{{ listName }}</h1>
-                    <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt"></span></p>
+                    <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt hoverable"></span></p>
                 </div>
                 <div class="arrows">
-                    <p v-on:click="leftClicked"  class="arrow" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
-                    <p v-on:click="rightClicked" class="arrow" id="right"><span class="fa fa-2x fa-arrow-right"></span></p>
+                    <p v-on:click="leftClicked"  class="arrow hoverable" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
+                    <p v-on:click="rightClicked" class="arrow hoverable" id="right"><span class="fa fa-2x fa-arrow-right"></span></p>
                 </div>
                 <div class="item_list">
                     <ul>
@@ -46,7 +46,7 @@ names.forEach((name) => {
                         </li>
                     </ul>
                 </div>
-        </div>
+        </section>
         `,
         props: [
             'connected',

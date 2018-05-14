@@ -1,0 +1,15 @@
+$font-color: #FFB939;
+$main-background-color: lightgoldenrodyellow;
+$element-background-color: black;
+
+$base-padding: 5%;
+
+@mixin basic-flex () {
+  display: flex;
+  flex-direction: row;
+}
+@mixin hover($fg-color, $bg-color) {
+  color: $fg-color;
+  background-color: $bg-color;
+  border-radius: 2px;
+}

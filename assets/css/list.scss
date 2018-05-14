@@ -1,95 +1,67 @@
-$orange: #FFB939;
-
-body {
-  background-color: lightgoldenrodyellow;
-  color: $orange;
-
-}
-* {
-
-}
 .page {
   height: 98vh;
   max-width: 500px;
   margin: auto;
   display: grid;
   grid-gap: 3px;
-  grid-template-columns:  1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 11.5% auto 10%;
-}
-.page > * {
-  background-color: #222222;
-
-}
-a {
-  text-decoration: none;
-  color: $orange;
-}
-ul {
-  list-style-type: none;
-  font-size: 1.5em;
-  margin-left: 10px;
-}
-.main_title, .arrows {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  > * {
+    background-color: $element-background-color;
+  }
 }
 
 header {
-  padding: 5%;
-  display: flex;
-  flex-direction: row;
+  padding: $base-padding;
+  @include basic-flex();
   justify-content: space-between;
   align-items: center;
 }
-.component {
-  padding: 5%;
-  overflow: hidden;
-}
-footer{
 
-  padding: 2%;
-  display: flex;
-  align-content: center;
-
-
-
-
-}
-
-#itemAddForm {
-
+.itemAddForm {
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  @include basic-flex();
   justify-content: space-around;
+  input {
+    background-color: $font-color;
+    color: black;
+    padding: 5px;
+  }
+  input:first-child {
+    width: 86%;
+  }
+}
 
-}
-#itemAddForm input {
-  background-color: $orange;
-  color: black;
-  padding: 5px;
-}
-#itemAddForm input:first-child {
-  width: 86%;
+section {
+  padding: $base-padding;
+  overflow: hidden;
+  .list_title, .arrows {
+    @include basic-flex();
+    justify-content: space-between;
+    align-items: center;
+  }
+  .list_title  h1 {
+    font-size: 2em;
+  }
+  .arrows {
+    position: relative;
+    top: 30%;
+    .arrow {
+      z-index: 1;
+    }
+  }
 }
 
-.arrows {
+.item_list {
+  height: 60vh;
+  overflow: scroll;
   position: relative;
-  top: 30%;
-}
-.arrow {
-  padding: 5px;
-  z-index: 1;
-}
-#plus:hover, .arrow:hover {
-  color: black;
-  background-color: $orange;
-}
-#plus {
-  padding: 5px;
+  top: -74px;
+  ul {
+    list-style-type: none;
+    font-size: 1.5em;
+    margin-left: 10px;
+  }
 }
 
 .middle-form {
@@ -98,22 +70,27 @@ footer{
   display: flex;
   flex-direction: column;
   align-items: end;
+  .form-field {
+    margin-bottom: 3%;
+  }
 }
-.form-field {
-  margin-bottom: 3%;
+
+footer {
+  padding: 2%;
+  display: flex;
+  align-content: center;
 }
-.footer-button  {
+
+.footer-button {
   text-align: right;
   padding-right: 3%;
-  color: $orange;
+  //color: $font-color;
+
+  a {
+    color: $font-color;
+  }
 }
-.footer-button a {
-  color: $orange;
-}
-.item_list {
-  height: 60vh;
-  overflow: scroll;
-  position: relative;
-  top: -74px;
-}
+
+
+
 
