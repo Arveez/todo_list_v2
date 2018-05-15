@@ -6,9 +6,11 @@ use App\Form\ItemListType;
 use App\Repository\ItemListRepository;
 use App\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ItemList;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 
 class DefaultController extends Controller
 {
@@ -25,7 +27,7 @@ class DefaultController extends Controller
      * @param ItemRepository $repository
      * @Route("/home/{currentView}", name="home", defaults={ "currentView" : null })
      */
-    public function home(ItemListRepository $repository): Response
+    public function home(ItemListRepository $repository, Request $request): Response
     {
         $lists = $repository->findBy(array(
             'owner' => $this->getUser()
@@ -51,6 +53,12 @@ class DefaultController extends Controller
 
         $itemList = new ItemList();
         $newListForm = $this->createForm(ItemListType::class, $itemList);
+
+        if ($request->isXmlHttpRequest()) {
+            dump(true);
+            return new Response(json_encode($lists));
+        }
+
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
             'listNames' => $listNames,

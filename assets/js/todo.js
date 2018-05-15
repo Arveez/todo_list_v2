@@ -151,14 +151,15 @@ var vm = new Vue({
                 + '/item/delete/'
                 + id)
                 .then((response) => {
-                });
-            this.socketServer.send(JSON.stringify({
-                action: 'itemDelete',
-                data: {
-                    listName: this.currentView,
-                    itemId: id
-                }
-            }))
+                    console.log('todel : ' + response);
+                    this.socketServer.send(JSON.stringify({
+                        action: 'itemDelete',
+                        data: {
+                            listName: this.currentView,
+                            itemId: id
+                        }
+                    }))
+                })
         },
         itemAdd: function () {
             axios.put(window.location.origin
