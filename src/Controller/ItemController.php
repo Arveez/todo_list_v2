@@ -36,7 +36,7 @@ class ItemController extends AbstractController
         ]));
     }
     /**
-     * @Route("/item/delete/item/{id}", name="item_delete")
+     * @Route("/item/delete/{id}", name="item_delete")
      */
     public function delete(Item $item)
     {

@@ -142,7 +142,7 @@ var vm = new Vue({
         },
         itemDelete(id) {
             axios.put(window.location.origin
-                + '/item/delete/item/'
+                + '/item/delete/'
                 + id)
                 .then((response) => {
                 });
