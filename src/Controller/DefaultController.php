@@ -51,7 +51,6 @@ class DefaultController extends Controller
 
         $itemList = new ItemList();
         $newListForm = $this->createForm(ItemListType::class, $itemList);
-
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
             'listNames' => $listNames,

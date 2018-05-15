@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import Vue2TouchEvents from 'vue2-touch-events';
+
 Vue.use(Vue2TouchEvents);
 
 
@@ -100,22 +101,6 @@ var vm = new Vue({
         }
     },
     methods: {
-        listDelete() {
-            axios.put(window.location.origin
-                + '/itemList/delete/'
-                + this.currentView
-            ).then(() => {
-               this.socketServer.send(JSON.stringify('reload'));
-            });
-        },
-        listAdd(e) {
-            axios.put(window.location.origin
-                + '/itemList/add/'
-                + e.target[0].value
-            ).then((response) => {});
-            console.log(e.target[0].value);
-            this.socketServer.send(JSON.stringify(e.target[0].value));
-        },
         menuToggle() {
             if (this.openMenu === false) {
                 this.openMenu = true;
@@ -124,7 +109,6 @@ var vm = new Vue({
             }
         },
         previousList() {
-
             this.nameIndex--;
             if (this.nameIndex === -1) {
                 this.nameIndex = names.length - 1;
@@ -140,22 +124,48 @@ var vm = new Vue({
 
             this.currentView = names[this.nameIndex];
         },
+        listDelete() {
+            axios.put(window.location.origin
+                + '/itemList/delete/'
+                + this.currentView
+            ).then(() => {
+                this.socketServer.send(JSON.stringify({action: 'reload'}));
+            });
+        },
+        listAdd(e) {
+            axios.put(window.location.origin
+                + '/itemList/add/'
+                + e.target[0].value
+            ).then((response) => {
+            });
+            console.log(e.target[0].value);
+            this.socketServer.send(JSON.stringify(e.target[0].value)); // i.e the new list name
+        },
         itemDelete(id) {
             axios.put(window.location.origin
                 + '/item/delete/'
                 + id)
                 .then((response) => {
                 });
-            this.socketServer.send(JSON.stringify([id, this.currentView]));
+            this.socketServer.send(JSON.stringify({
+                action: 'itemDelete',
+                data: {
+                    listName: this.currentView,
+                    itemId: id
+                }
+            }))
         },
-        itemCreate: function () {
+        itemAdd: function () {
             axios.put(window.location.origin
                 + '/item/add/'
                 + this.currentView
                 + '/'
                 + this.itemInput)
                 .then((response) => {
-                    this.socketServer.send(JSON.stringify(response.data));
+                    this.socketServer.send(JSON.stringify({
+                        action: 'itemAdd',
+                        data: response.data
+                    }));
                 });
             this.itemInput = '';
         },
@@ -180,7 +190,7 @@ var vm = new Vue({
         this.socketServer = wsServer(this);
         let currentViewInUrl = window.location.pathname.split('/');
         this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
-        this.noList =  this.items.length === 0;
+        this.noList = this.items.length === 0;
     }
 });
 

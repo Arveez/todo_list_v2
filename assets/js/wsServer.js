@@ -6,25 +6,30 @@ module.exports = (vm) =>{
         vm.connected = true;
         console.log('connected')
     };
+
     conn.onmessage = (ev) => {
+
         var data = JSON.parse(ev.data);
 
-        if (data === "reload") {
+        if (data['action'] === "reload") {
             window.location.href = window.location.origin + '/home';
         } else
 
         if (typeof data === "string") {
-            console.log(window.location);
             window.location.href = window.location.origin + '/home/' + data;
         }
 
-        if (isNaN(data[0])) {
-            vm.incomingItemAdd(data);
-        } else {
-            vm.items[data[1]].forEach( (item) => {
+        if ( data['action'] === 'itemAdd') {
 
-                if (item.id == data[0]) {
-                    vm.incomingItemRemove(vm.items[data[1]].indexOf(item), data[1]);
+            vm.incomingItemAdd(data['data']);
+
+        } else if  ( data['action'] === 'itemDelete' ) {
+
+            let listName = data['data']['listName'];
+
+            vm.items[listName].forEach( (item) => {
+                if (item.id == data['data']['itemId']) {
+                    vm.incomingItemRemove(vm.items[listName].indexOf(item), listName);
                     return true;
                 }
 

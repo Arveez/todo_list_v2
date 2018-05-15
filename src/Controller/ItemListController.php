@@ -26,7 +26,6 @@ class ItemListController extends Controller
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($list);
             $manager->flush();
-
         return new Response($listName);
     }
 
