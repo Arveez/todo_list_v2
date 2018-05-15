@@ -15,8 +15,8 @@ module.exports = (vm) =>{
             window.location.href = window.location.origin + '/home';
         } else
 
-        if (typeof data === "string") {
-            window.location.href = window.location.origin + '/home/' + data;
+        if (data['action'] === "redirect") {
+            window.location.href = window.location.origin + '/home/' + data['data']['newListName'];
         }
 
         if ( data['action'] === 'itemAdd') {
@@ -28,7 +28,9 @@ module.exports = (vm) =>{
             let listName = data['data']['listName'];
 
             vm.items[listName].forEach( (item) => {
+
                 if (item.id == data['data']['itemId']) {
+
                     vm.incomingItemRemove(vm.items[listName].indexOf(item), listName);
                     return true;
                 }

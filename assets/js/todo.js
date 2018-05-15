@@ -139,7 +139,12 @@ var vm = new Vue({
             ).then((response) => {
             });
             console.log(e.target[0].value);
-            this.socketServer.send(JSON.stringify(e.target[0].value)); // i.e the new list name
+            this.socketServer.send(JSON.stringify({
+                action: 'redirect',
+                data: {
+                    newListName: e.target[0].value
+                }
+            }))
         },
         itemDelete(id) {
             axios.put(window.location.origin
