@@ -54,10 +54,6 @@ class DefaultController extends Controller
         $itemList = new ItemList();
         $newListForm = $this->createForm(ItemListType::class, $itemList);
 
-        if ($request->isXmlHttpRequest()) {
-            dump(true);
-            return new Response(json_encode($lists));
-        }
 
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
@@ -66,11 +62,13 @@ class DefaultController extends Controller
         ]));
     }
 
+
     /**
      * @return Response
      * @Route("/admin", name="admin")
      */
-    public function admin()
+    public
+    function admin()
     {
         return new Response("admin");
     }

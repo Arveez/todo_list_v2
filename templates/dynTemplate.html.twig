@@ -37,7 +37,7 @@
                    v-bind:items="items[currentView]"
                    v-bind:connected="connected"
                    v-on:to-parent-item-clicked="itemDelete"
-                   v-on:to-parent-form-submit="itemCreate"
+                   v-on:to-parent-form-submit="itemAdd"
                    v-on:to-parent-cross-clicked="listDelete"
                    v-on:to-parent-left-clicked="previousList"
                    v-on:to-parent-right-clicked="nextList"
@@ -45,7 +45,7 @@
         >
         </section>
         <footer class="">
-            <form v-if="!noList" class="itemAddForm" v-on:submit.prevent="itemCreate">
+            <form v-if="!noList" class="itemAddForm" v-on:submit.prevent="itemAdd">
                 <input
                         id="itemInput"
                         v-model="itemInput"

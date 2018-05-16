@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends Controller
 {
@@ -24,16 +25,18 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
+
         return $this->render('login.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error
+            'error' => $error
         ));
     }
 
     /**
      * @Route("/logout", name="logout")
      */
-    public function logout()
+    public
+    function logout()
     {
 
     }
