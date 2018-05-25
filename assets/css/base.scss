@@ -17,3 +17,8 @@ a {
     text-decoration: underline;
   }
 }
+
+.error-message {
+  color: $error-font-color;
+  font-size: $messages-font-size;
+}

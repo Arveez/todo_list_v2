@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="page">
+    <header>
+        <div id="title">
+            <h1>TooDoo</h1>
+        </div>
+    </header>
+    <div>
+        <div class="middle-form">
+            <p class="error-message">{{ errorMessage }}</p>
+            
+        </div>
+    </div>
+    <div class="footer-button">
+        <h2 class="footer-title">
+            <a href="{{ path('user_registration') }}">Retour</a>
+        </h2>
+    </div>
+</div>
+{% endblock %}

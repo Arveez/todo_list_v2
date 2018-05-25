@@ -13,6 +13,14 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            anonymous: true
+            pattern:  ^/api/
+            form_login:
+                login_path: apiLogin
+                check_path: apiLogin
+                default_target_path: "http://localhost:8000"
+
         main:
             anonymous: true
             pattern: ^/
@@ -41,5 +49,6 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api, role: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER}
        #  - { path: ^/, roles: ROLE_USER }

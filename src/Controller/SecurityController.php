@@ -25,12 +25,12 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
         return $this->render('login.html.twig', array(
             'last_username' => $lastUsername,
             'error' => $error
         ));
     }
+
 
     /**
      * @Route("/logout", name="logout")

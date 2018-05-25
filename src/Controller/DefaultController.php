@@ -29,6 +29,7 @@ class DefaultController extends Controller
      */
     public function home(ItemListRepository $repository, Request $request): Response
     {
+
         $lists = $repository->findBy(array(
             'owner' => $this->getUser()
         ));

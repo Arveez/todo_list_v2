@@ -1,7 +1,8 @@
 $font-color: #FFB939;
 $main-background-color: lightgoldenrodyellow;
 $element-background-color: black;
-
+$error-font-color: red;
+$messages-font-size: 1.5em;
 $base-padding: 5%;
 
 @mixin basic-flex () {
