@@ -31,7 +31,7 @@ names.forEach((name) => {
             v-touch:swipe.left="leftClicked"
             v-touch:swipe.right="rightClicked">
                 <div class="list_title">
-                    <h1 class="listName">{{ listName }}</h1>
+                    <h1 class="listName">{{ listName.substring(5) }}</h1>
                     <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt hoverable"></span></p>
                 </div>
                 <div class="arrows">
@@ -134,24 +134,24 @@ var vm = new Vue({
         },
         listAdd(e) {
             axios.put(window.location.origin
-                + '/itemList/add/'
+                + '/itemList/add/list_'
                 + e.target[0].value
             ).then((response) => {
+                console.log("list to add : " + response.data);
+                this.socketServer.send(JSON.stringify({
+                    action: 'redirect',
+                    data: {
+                        newListName: response.data
+                    }
+                }))
             });
-            console.log(e.target[0].value);
-            this.socketServer.send(JSON.stringify({
-                action: 'redirect',
-                data: {
-                    newListName: e.target[0].value
-                }
-            }))
         },
         itemDelete(id) {
             axios.put(window.location.origin
                 + '/item/delete/'
                 + id)
                 .then((response) => {
-                    console.log('todel : ' + response);
+                    console.log('todel : ' + response.data);
                     this.socketServer.send(JSON.stringify({
                         action: 'itemDelete',
                         data: {
