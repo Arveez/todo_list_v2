@@ -44,7 +44,7 @@ class RegistrationController extends Controller
             } catch (UniqueConstraintViolationException $e) {
                 return new Response(
                     $this->renderView('errorMessage.html.twig', array(
-                        'errorMessage' => 'Nom ou e-mail déjà utilisé'
+                        'errorMessage' => 'Login ou e-mail déjà utilisé'
                     ))
                 );
             }

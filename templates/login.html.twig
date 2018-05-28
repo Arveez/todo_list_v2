@@ -8,12 +8,14 @@
         </header>
         <div>
             {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+                <p class="error-message">&nbsp;Identifiants incorrects</p>
             {% endif %}
 
             <form class="middle-form action="{{ path('login') }} method="post">
                 <div class="form-field">
-                    <input type="text"
+                    <input required="required"
+                           type="text"
                            id="username"
                            name="_username"
                            placeholder="Nom"
@@ -21,7 +23,7 @@
                     />
                 </div>
                 <div class="form-field">
-                    <input type="password" id="password" name="_password" placeholder="Mot de passe"/>
+                    <input required="required" type="password" id="password" name="_password" placeholder="Mot de passe"/>
                 </div>
                 <div class="user-form-button">
                     <button type="submit">Go !</button>
