@@ -125,7 +125,7 @@ var vm = new Vue({
             this.currentView = names[this.nameIndex];
         },
         listDelete() {
-            axios.post(window.location.origin
+            axios.put(window.location.origin
                 + '/itemList/delete/'
                 + this.currentView
             ).then(() => {
@@ -133,7 +133,7 @@ var vm = new Vue({
             });
         },
         listAdd(e) {
-            axios.post(window.location.origin
+            axios.put(window.location.origin
                 + '/itemList/add/list_'
                 + e.target[0].value
             ).then((response) => {
@@ -147,7 +147,7 @@ var vm = new Vue({
             });
         },
         itemDelete(id) {
-            axios.post(window.location.origin
+            axios.put(window.location.origin
                 + '/item/delete/'
                 + id)
                 .then((response) => {
@@ -162,7 +162,7 @@ var vm = new Vue({
                 })
         },
         itemAdd: function () {
-            axios.post(window.location.origin
+            axios.put(window.location.origin
                 + '/item/add/'
                 + this.currentView
                 + '/'
