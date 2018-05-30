@@ -1,6 +1,6 @@
 module.exports = (vm) => {
 
-    const conn = new WebSocket('ws://localhost:8080');
+    const conn = new WebSocket('ws://dev.arveez-news.com:8080');
 
     conn.onopen = (e) => {
         vm.connected = true;

@@ -126,7 +126,7 @@ var vm = new Vue({
         },
         listDelete() {
             axios.post(window.location.origin
-                + '/itemList/delete/'
+                + '/todo_list_v2/public/itemList/delete/'
                 + this.currentView
             ).then(() => {
                 this.socketServer.send(JSON.stringify({action: 'reload'}));
@@ -134,7 +134,7 @@ var vm = new Vue({
         },
         listAdd(e) {
             axios.post(window.location.origin
-                + '/itemList/add/list_'
+                + '/itodo_list_v2/public/temList/add/list_'
                 + e.target[0].value
             ).then((response) => {
                 console.log("list to add : " + response.data);
@@ -148,7 +148,7 @@ var vm = new Vue({
         },
         itemDelete(id) {
             axios.post(window.location.origin
-                + '/item/delete/'
+                + '/todo_list_v2/public/item/delete/'
                 + id)
                 .then((response) => {
                     console.log('todel : ' + response.data);
@@ -163,7 +163,7 @@ var vm = new Vue({
         },
         itemAdd: function () {
             axios.post(window.location.origin
-                + '/item/add/'
+                + '/todo_list_v2/public/item/add/'
                 + this.currentView
                 + '/'
                 + this.itemInput)
