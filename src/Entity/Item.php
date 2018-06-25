@@ -23,6 +23,11 @@ class Item
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ItemList", inversedBy="items")
+     */
+    private $list;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -45,4 +50,22 @@ class Item
     {
         $this->name = $name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getList()
+    {
+        return $this->list;
+    }
+
+    /**
+     * @param mixed $list
+     */
+    public function setList($list): void
+    {
+        $this->list = $list;
+    }
+
+
 }

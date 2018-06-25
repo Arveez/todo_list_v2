@@ -20,11 +20,16 @@ class ItemController extends AbstractController
         $item = new Item();
         $item->setName($itemName);
 
+
+
+
         $list = $repository->findOneBy(array(
             'name' => $listName,
             'owner' => $this->getUser()
             ));
         $list->addItem($item);
+
+        $item->setList($list);
 
         $em->persist($list);
         $em->flush();

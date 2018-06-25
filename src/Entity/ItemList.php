@@ -35,7 +35,7 @@ class ItemList
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Item", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="list", cascade={"persist", "remove"})
      */
     private $items;
 
@@ -114,4 +114,5 @@ class ItemList
         $this->items->remove($item->getId());
 
     }
+
 }
