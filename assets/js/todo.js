@@ -32,7 +32,7 @@ names.forEach((name) => {
             v-touch:swipe.right="rightClicked">
                 <div class="list_title">
                     <h1 class="listName">{{ listName.substring(5) }}</h1>
-                    <p v-on:click="crossClicked"><span  class="fa fa-2x fa-trash-alt hoverable"></span></p>
+                    <p v-on:click="trashClicked"><span  class="fa fa-2x fa-trash-alt hoverable"></span></p>
                 </div>
                 <div class="arrows">
                     <p v-on:click="leftClicked"  class="arrow hoverable" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
@@ -40,17 +40,16 @@ names.forEach((name) => {
                 </div>
                 <div class="item_list">
                     <ul>
-                        <li v-for="(item, key) of items" 
+                        <li v-for="(item) of items" 
                             v-bind:id="item.id"
                             v-on:click="itemClicked">
-                                {{ item.name }} 
+                                {{ item.name }}
                         </li>
                     </ul>
                 </div>
         </section>
         `,
         props: [
-            'connected',
             'items',
         ],
         data() {
@@ -65,8 +64,8 @@ names.forEach((name) => {
             rightClicked() {
                 this.$emit('to-parent-right-clicked')
             },
-            crossClicked() {
-                this.$emit('to-parent-cross-clicked')
+            trashClicked() {
+                this.$emit('to-parent-trash-clicked')
             },
             itemClicked(ev) {
                 this.$emit('to-parent-item-clicked', ev.target.id);
@@ -175,8 +174,8 @@ var vm = new Vue({
                 });
             this.itemInput = '';
         },
-        incomingItemRemove(indx, listName) {
-            vm.items[listName].splice(indx, 1);
+        incomingItemRemove(index, listName) {
+            vm.items[listName].splice(index, 1);
         },
         incomingItemAdd(item) {
             if (this.items[item['listName']] === undefined) {

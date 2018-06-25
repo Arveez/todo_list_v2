@@ -35,10 +35,9 @@
                    v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
                    v-bind:items="items[currentView]"
-                   v-bind:connected="connected"
                    v-on:to-parent-item-clicked="itemDelete"
                    v-on:to-parent-form-submit="itemAdd"
-                   v-on:to-parent-cross-clicked="listDelete"
+                   v-on:to-parent-trash-clicked="listDelete"
                    v-on:to-parent-left-clicked="previousList"
                    v-on:to-parent-right-clicked="nextList"
 
@@ -50,7 +49,7 @@
                         id="itemInput"
                         v-model="itemInput"
                         v-bind:placeholder="placeHolder"
-                        pattern="[éèçà'a-zA-Z0-9]+"
+                        pattern="[éèçàêâ 'a-zA-Z0-9]+"
                         title="Caractères alphanumériques"
                 >
                 <input type="submit" value="+">
