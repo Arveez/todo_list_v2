@@ -2,39 +2,37 @@ module.exports = (vm) => {
 
     const conn = new WebSocket('ws://localhost:8080');
 
-    conn.onopen = (e) => {
+    conn.onopen = () => {
         vm.connected = true;
-        console.log('connected')
     };
 
-    conn.onmessage = (ev) => {
+    conn.onmessage = (e) => {
 
-        let data = JSON.parse(ev.data);
+        let data = JSON.parse(e.data);
 
-        if (data['action'] === "reload") {
-            window.location.href = window.location.origin + '/home';
-        }
-        if (data['action'] === "redirect") {
-            window.location.href = window.location.origin + '/home/' + data['data']['newListName'];
-        }
+        switch (data['action']) {
+            case "reload":
+                window.location.href = window.location.origin + '/home';
+                break;
+            case "redirect":
+                window.location.href = window.location.origin + '/home/' + data['data']['newListName'];
+                break;
+            case "itemAdd":
+                vm.incomingItemAdd(data['data']);
+                break;
+            case "itemDelete":
+                let listName = data['data']['listName'];
 
-        if (data['action'] === 'itemAdd') {
+                vm.lists[listName].forEach((item) => {
 
-            vm.incomingItemAdd(data['data']);
+                    if (item.id == data['data']['itemId']) {
 
-        } else if (data['action'] === 'itemDelete') {
+                        vm.incomingItemRemove(vm.lists[listName].indexOf(item), listName);
+                        return true;
+                    }
 
-            let listName = data['data']['listName'];
-
-            vm.lists[listName].forEach((item) => {
-
-                if (item.id == data['data']['itemId']) {
-
-                    vm.incomingItemRemove(vm.lists[listName].indexOf(item), listName);
-                    return true;
-                }
-
-            })
+                });
+                break;
         }
     };
     conn.onclose = () => {

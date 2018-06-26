@@ -87,41 +87,30 @@ var vm = new Vue({
         connected: false,
         itemInput: '',
         placeHolder: 'Ajoutez...',
-        lists,
-        noList: '',
+        noList: 'NULL',
         socketServer: 'NULL',
+        lists,
         componentsNames: names,
         nameIndex: 0,
-        currentView: names[this.nameIndex],
-    },
-    watch: {
-        connected: function () {
-            console.log('connnect change');
-        }
+        currentView: 'NULL'
     },
     methods: {
         menuToggle() {
-            if (this.openMenu === false) {
-                this.openMenu = true;
-            } else {
-                this.openMenu = false;
-            }
+            this.openMenu = this.openMenu ? false : true;
         },
         previousList() {
             this.nameIndex--;
             if (this.nameIndex === -1) {
-                this.nameIndex = names.length - 1;
+                this.nameIndex = this.componentsNames.length - 1;
             }
-
-            this.currentView = names[this.nameIndex];
+            this.currentView = this.componentsNames[this.nameIndex];
         },
         nextList() {
             this.nameIndex++;
-            if (this.nameIndex === names.length) {
+            if (this.nameIndex === this.componentsNames.length) {
                 this.nameIndex = 0;
             }
-
-            this.currentView = names[this.nameIndex];
+            this.currentView = this.componentsNames[this.nameIndex];
         },
         listDelete() {
             axios.post(window.location.origin
@@ -178,23 +167,17 @@ var vm = new Vue({
             vm.lists[listName].splice(index, 1);
         },
         incomingItemAdd(item) {
-            if (this.lists[item['listName']] === undefined) {
-
-                this.lists[item['listName']] = item['listName'];
-                this.lists[item['listName'][0]] = {'id': item['itemId'], 'name': item['itemName']}
-            } else {
-                this.lists[item['listName']].push({
-                    'id': item['itemId'],
-                    'name': item['itemName']
-                });
-            }
+            this.lists[item['listName']].push({
+                'id': item['itemId'],
+                'name': item['itemName']
+            });
         }
 
     },
     mounted() {
         this.socketServer = wsServer(this);
-        let currentViewInUrl = window.location.pathname.split('/');
-        this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
+        let currentViewInUrl = window.location.pathname.split('/')[2];
+        this.currentView = currentViewInUrl ? currentViewInUrl : this.componentsNames[this.nameIndex];
         this.noList = this.lists.length === 0;
     }
 });
