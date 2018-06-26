@@ -34,7 +34,7 @@
         <section v-else
                    v-bind:is="currentView"
                    v-bind:place-holder="placeHolder"
-                   v-bind:items="items[currentView]"
+                   v-bind:items="lists[currentView]"
                    v-on:to-parent-item-clicked="itemDelete"
                    v-on:to-parent-form-submit="itemAdd"
                    v-on:to-parent-trash-clicked="listDelete"

@@ -87,7 +87,7 @@ var vm = new Vue({
         connected: false,
         itemInput: '',
         placeHolder: 'Ajoutez...',
-        items: lists,
+        lists,
         noList: '',
         socketServer: 'NULL',
         componentsNames: names,
@@ -175,15 +175,15 @@ var vm = new Vue({
             this.itemInput = '';
         },
         incomingItemRemove(index, listName) {
-            vm.items[listName].splice(index, 1);
+            vm.lists[listName].splice(index, 1);
         },
         incomingItemAdd(item) {
-            if (this.items[item['listName']] === undefined) {
+            if (this.lists[item['listName']] === undefined) {
 
-                this.items[item['listName']] = item['listName'];
-                this.items[item['listName'][0]] = {'id': item['itemId'], 'name': item['itemName']}
+                this.lists[item['listName']] = item['listName'];
+                this.lists[item['listName'][0]] = {'id': item['itemId'], 'name': item['itemName']}
             } else {
-                this.items[item['listName']].push({
+                this.lists[item['listName']].push({
                     'id': item['itemId'],
                     'name': item['itemName']
                 });
@@ -195,7 +195,7 @@ var vm = new Vue({
         this.socketServer = wsServer(this);
         let currentViewInUrl = window.location.pathname.split('/');
         this.currentView = currentViewInUrl[2] ? currentViewInUrl[2] : names[this.nameIndex];
-        this.noList = this.items.length === 0;
+        this.noList = this.lists.length === 0;
     }
 });
 

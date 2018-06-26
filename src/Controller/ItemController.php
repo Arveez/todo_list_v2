@@ -21,8 +21,6 @@ class ItemController extends AbstractController
         $item->setName($itemName);
 
 
-
-
         $list = $repository->findOneBy(array(
             'name' => $listName,
             'owner' => $this->getUser()

@@ -26,11 +26,11 @@ module.exports = (vm) => {
 
             let listName = data['data']['listName'];
 
-            vm.items[listName].forEach((item) => {
+            vm.lists[listName].forEach((item) => {
 
                 if (item.id == data['data']['itemId']) {
 
-                    vm.incomingItemRemove(vm.items[listName].indexOf(item), listName);
+                    vm.incomingItemRemove(vm.lists[listName].indexOf(item), listName);
                     return true;
                 }
 

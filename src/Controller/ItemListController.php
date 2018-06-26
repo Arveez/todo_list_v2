@@ -26,6 +26,7 @@ class ItemListController extends Controller
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($list);
             $manager->flush();
+
         return new Response($listName);
     }
 
@@ -35,14 +36,15 @@ class ItemListController extends Controller
      */
     public function deleteList($name, ItemListRepository $repository)
     {
-        $manager = $this->getDoctrine()->getManager();
+
         $list = $repository->findOneBy(array(
             'name' => $name,
             'owner' => $this->getUser()
         ));
+
+        $manager = $this->getDoctrine()->getManager();
         $manager->remove($list);
         $manager->flush();
-
 
         return new Response($this->redirectToRoute("home"));
     }
