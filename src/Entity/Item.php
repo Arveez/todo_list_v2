@@ -66,6 +66,4 @@ class Item
     {
         $this->list = $list;
     }
-
-
 }

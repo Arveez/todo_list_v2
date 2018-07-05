@@ -30,6 +30,7 @@ class ItemController extends AbstractController
         $item->setList($list);
 
         $em->persist($list);
+
         $em->flush();
 
         return new Response(json_encode([
@@ -52,5 +53,4 @@ class ItemController extends AbstractController
             'itemId' => $item->getId()
         ]));
     }
-
 }
