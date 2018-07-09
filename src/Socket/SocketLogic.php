@@ -41,7 +41,6 @@ class SocketLogic implements MessageComponentInterface
     }
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        dump($msg);
         foreach ($this->clients as $client)
         {
             $client->send($msg);

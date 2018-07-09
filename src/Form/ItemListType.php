@@ -24,7 +24,7 @@ class ItemListType extends AbstractType
             ->add('name', TextType::class, array(
                 'label' => false ,
                 'attr' => array(
-                    'pattern' => '[a-zA-Z]{1}[a-zA-Z0-9]+',
+                    'pattern' => '[a-zA-Z]{1}[a-zA-Z0-9_.]+',
                     'title' => 'Caractères alphanumériques; commençant par une lettre')))
             ->add('save', SubmitType::class, array('label' => 'Ajouter'));
 
