@@ -59,7 +59,7 @@ class DefaultController extends Controller
             'lists' => $refactoredLists,
             'listNames' => $listNames,
             'newListForm' => $newListForm->createView(),
-            'userId' => $this->getUser()->getId()
+            'userId' => $this->getUser()->getId(),
         ]));
     }
 

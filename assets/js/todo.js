@@ -65,25 +65,31 @@ names.forEach((name) => {
         methods: {
             leftClicked() {
                 this.$emit('to-parent-left-clicked')
-            },
+            }
+            ,
             rightClicked() {
                 this.$emit('to-parent-right-clicked')
-            },
+            }
+            ,
             trashClicked() {
                 this.$emit('to-parent-trash-clicked')
-            },
+            }
+            ,
             itemClicked(ev) {
                 this.$emit('to-parent-item-clicked', ev.target.id);
-            },
+            }
+            ,
             formSubmit() {
                 this.$emit('to-parent-form-submit', this.itemInput);
             }
         }
-    });
+    })
+    ;
 
 });
 
 Vue.config.devtools = true;
+
 var vm = new Vue({
     el: '#page_bloc',
     delimiters: ['${', '}'],
@@ -128,7 +134,10 @@ var vm = new Vue({
                 + '/itemList/delete/'
                 + this.currentView
             ).then(() => {
-                this.socketServer.send(JSON.stringify({action: 'reload'}));
+                this.socketServer.send(JSON.stringify({
+                    action: 'reload',
+                    userId
+                }));
             });
         },
         listAdd(e) {
@@ -141,7 +150,8 @@ var vm = new Vue({
                     action: 'redirect',
                     data: {
                         newListName: response.data
-                    }
+                    },
+                    userId
                 }))
             });
         },
