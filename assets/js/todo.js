@@ -5,23 +5,28 @@ import Vue2TouchEvents from 'vue2-touch-events';
 Vue.use(Vue2TouchEvents);
 
 
-var wsServer = require('./wsServer');
+const wsServer = require('./wsServer');
 
-var names = JSON.parse(
+const names = JSON.parse(
     document.querySelector(
         '#page_bloc'
     ).getAttribute(
         'data-list_names'
     )
 );
-var lists = JSON.parse(
+const lists = JSON.parse(
     document.querySelector(
         '#page_bloc'
     ).getAttribute(
         'data-lists'
     )
 );
-console.log(lists);
+const userId = document.querySelector(
+    '#page_bloc'
+).getAttribute(
+    'data-user_id'
+);
+console.log('user id : ' + userId);
 
 names.forEach((name) => {
 
@@ -105,6 +110,12 @@ var vm = new Vue({
             }
             this.currentView = this.componentsNames[this.nameIndex];
         },
+        initialMessage() {
+            this.socketServer.send(JSON.stringify({
+                action: 'initial',
+                userId: userId
+            }));
+        },
         nextList() {
             this.nameIndex++;
             if (this.nameIndex === this.componentsNames.length) {
@@ -144,8 +155,9 @@ var vm = new Vue({
                         action: 'itemDelete',
                         data: {
                             listName: this.currentView,
-                            itemId: id
-                        }
+                            itemId: id,
+                        },
+                        userId
                     }))
                 })
         },
@@ -158,7 +170,8 @@ var vm = new Vue({
                 .then((response) => {
                     this.socketServer.send(JSON.stringify({
                         action: 'itemAdd',
-                        data: response.data
+                        data: response.data,
+                        userId
                     }));
                 });
             this.itemInput = '';

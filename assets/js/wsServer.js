@@ -4,6 +4,7 @@ module.exports = (vm) => {
 
     conn.onopen = () => {
         vm.connected = true;
+        vm.initialMessage();
     };
 
     conn.onmessage = (e) => {

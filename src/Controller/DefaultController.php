@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ItemList;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 
 class DefaultController extends Controller
@@ -29,7 +30,6 @@ class DefaultController extends Controller
      */
     public function home(ItemListRepository $repository, Request $request): Response
     {
-
         $lists = $repository->findBy(array(
             'owner' => $this->getUser()
         ));
@@ -58,7 +58,8 @@ class DefaultController extends Controller
         return new Response($this->renderView('dynTemplate.html.twig', [
             'lists' => $refactoredLists,
             'listNames' => $listNames,
-            'newListForm' => $newListForm->createView()
+            'newListForm' => $newListForm->createView(),
+            'userId' => $this->getUser()->getId()
         ]));
     }
 

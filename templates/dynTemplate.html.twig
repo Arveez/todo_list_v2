@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+
+    {{ dump(userId) }}
     <div class="page"
          data-lists="{{ lists|json_encode }}"
          data-list_names="{{ listNames|json_encode }}"
+         data-user_id="{{ userId }}"
          id="page_bloc">
-
         <header>
             <div>
                 <span v-if="connected" class="plug fa fa-2x fa-plug"></span>
