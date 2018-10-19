@@ -12,11 +12,15 @@ module.exports = (vm) => {
         let data = JSON.parse(e.data);
 
         switch (data['action']) {
-            case "reload":
-                window.location.href = window.location.origin + '/home';
+            case "listDelete":
+
+                //window.location.href = window.location.origin + '/home';
+
+                vm.incomingListRemove(data['data']);
                 break;
-            case "redirect":
-                window.location.href = window.location.origin + '/home/' + data['data']['newListName'];
+            case "listAdd":
+                //window.location.href = window.location.origin + '/home/' + data['data']['newListName'];
+                vm.incomingListAdd(data['data']['newListName']);
                 break;
             case "itemAdd":
                 vm.incomingItemAdd(data['data']);
@@ -30,6 +34,7 @@ module.exports = (vm) => {
 
                         vm.incomingItemRemove(vm.lists[listName].indexOf(item), listName);
                         return true;
+
                     }
 
                 });

@@ -21,14 +21,14 @@ const lists = JSON.parse(
         'data-lists'
     )
 );
+
 const userId = document.querySelector(
     '#page_bloc'
 ).getAttribute(
     'data-user_id'
 );
-console.log('user id : ' + userId);
 
-names.forEach((name) => {
+function listComponentDeclare(name) {
 
     Vue.component(name, {
         template: `
@@ -82,10 +82,14 @@ names.forEach((name) => {
             formSubmit() {
                 this.$emit('to-parent-form-submit', this.itemInput);
             }
-        }
+        },
+
     })
     ;
+}
 
+names.forEach((name) => {
+    listComponentDeclare(name)
 });
 
 Vue.config.devtools = true;
@@ -103,9 +107,15 @@ var vm = new Vue({
         lists,
         componentsNames: names,
         nameIndex: 0,
-        currentView: 'NULL'
+        currentView: 'NULL',
     },
     methods: {
+        initialMessage() {
+            this.socketServer.send(JSON.stringify({
+                action: 'initial',
+                userId: userId
+            }));
+        },
         menuToggle() {
             this.openMenu = this.openMenu ? false : true;
         },
@@ -115,12 +125,6 @@ var vm = new Vue({
                 this.nameIndex = this.componentsNames.length - 1;
             }
             this.currentView = this.componentsNames[this.nameIndex];
-        },
-        initialMessage() {
-            this.socketServer.send(JSON.stringify({
-                action: 'initial',
-                userId: userId
-            }));
         },
         nextList() {
             this.nameIndex++;
@@ -133,9 +137,10 @@ var vm = new Vue({
             axios.post(window.location.origin
                 + '/itemList/delete/'
                 + this.currentView
-            ).then(() => {
+            ).then((response) => {
                 this.socketServer.send(JSON.stringify({
-                    action: 'reload',
+                    action: 'listDelete',
+                    data: this.currentView,
                     userId
                 }));
             });
@@ -145,9 +150,8 @@ var vm = new Vue({
                 + '/itemList/add/list_'
                 + e.target[0].value
             ).then((response) => {
-                console.log("list to add : " + response.data);
                 this.socketServer.send(JSON.stringify({
-                    action: 'redirect',
+                    action: 'listAdd',
                     data: {
                         newListName: response.data
                     },
@@ -160,7 +164,6 @@ var vm = new Vue({
                 + '/item/delete/'
                 + id)
                 .then((response) => {
-                    console.log('todel : ' + response.data);
                     this.socketServer.send(JSON.stringify({
                         action: 'itemDelete',
                         data: {
@@ -186,6 +189,31 @@ var vm = new Vue({
                 });
             this.itemInput = '';
         },
+        incomingListAdd(listName) {
+            this.menuToggle();
+            this.currentView = listName;
+            listComponentDeclare(listName);
+            this.lists[listName] = [];
+            this.componentsNames.push(listName);
+            vm.$forceUpdate();
+
+            // next line temporary since a "little" something doesn't work with new list :/
+
+            window.location.href = window.location.origin + '/home/' + listName;
+        },
+        incomingListRemove(listName) {
+            delete this.lists[listName];
+            for (let i = 0; i < this.componentsNames.length; i++) {
+                if (this.componentsNames[i] === listName) {
+                    this.componentsNames.splice(i, 1);
+                }
+            }
+            if (this.componentsNames.length === 0) {
+               this.noList = true;
+            } else {
+                this.previousList();
+            }
+        },
         incomingItemRemove(index, listName) {
             vm.lists[listName].splice(index, 1);
         },
@@ -201,7 +229,8 @@ var vm = new Vue({
         this.socketServer = wsServer(this);
         let currentViewInUrl = window.location.pathname.split('/')[2];
         this.currentView = currentViewInUrl ? currentViewInUrl : this.componentsNames[this.nameIndex];
-        this.noList = this.lists.length === 0;
+        this.noList = this.componentsNames.length === 0;
+        console.log('nolist : ' + this.noList);
     }
 });
 

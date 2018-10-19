@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# opens $1 terminal in phpstorm
+
+for i in `seq 1 $1`;
+do
+	xdotool key ctrl+shift+t;
+done;

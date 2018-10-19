@@ -43,6 +43,7 @@ class SocketLogic implements MessageComponentInterface
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         $errMess = $e->getMessage() . "\nIn " . $e->getFile() . "\nLine " . $e->getLine();
+        var_dump($errMess);
         $conn->close();
     }
 

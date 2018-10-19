@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    {{ dump(userId) }}
     <div class="page"
          data-lists="{{ lists|json_encode }}"
          data-list_names="{{ listNames|json_encode }}"
