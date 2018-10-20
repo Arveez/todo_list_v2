@@ -33,14 +33,15 @@
             </div>
         </div>
         <section v-else
-                   v-bind:is="currentView"
-                   v-bind:place-holder="placeHolder"
-                   v-bind:items="lists[currentView]"
-                   v-on:to-parent-item-clicked="itemDelete"
-                   v-on:to-parent-form-submit="itemAdd"
-                   v-on:to-parent-trash-clicked="listDelete"
-                   v-on:to-parent-left-clicked="previousList"
-                   v-on:to-parent-right-clicked="nextList"
+                 v-bind:is="currentView"
+                 v-bind:place-holder="placeHolder"
+                 v-bind:items="lists[currentView]"
+                 v-bind:one-list="oneList"
+                 v-on:to-parent-item-clicked="itemDelete"
+                 v-on:to-parent-form-submit="itemAdd"
+                 v-on:to-parent-trash-clicked="listDelete"
+                 v-on:to-parent-left-clicked="previousList"
+                 v-on:to-parent-right-clicked="nextList"
 
         >
         </section>

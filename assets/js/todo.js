@@ -39,10 +39,21 @@ function listComponentDeclare(name) {
                     <h1 class="listName">{{ listName.substring(5) }}</h1>
                     <p v-on:click="trashClicked"><span  class="fa fa-2x fa-trash-alt hoverable"></span></p>
                 </div>
-                <div class="arrows">
+                
+                
+                <div v-if="!oneList" class="arrows">
                     <p v-on:click="leftClicked"  class="arrow hoverable" id="left"><span class="fa fa-2x fa-arrow-left"></span></p>
                     <p v-on:click="rightClicked" class="arrow hoverable" id="right"><span class="fa fa-2x fa-arrow-right"></span></p>
                 </div>
+                
+                // TODOO : undestand why below div is necessary
+                
+                <div v-else class="arrows">
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                </div>
+                
+                
                 <div class="item_list">
                     <ul>
                         <li v-for="(item) of items" 
@@ -56,10 +67,12 @@ function listComponentDeclare(name) {
         `,
         props: [
             'items',
+            'one-list',
         ],
         data() {
             return {
-                'listName': name
+                'listName': name,
+
             }
         },
         methods: {
@@ -106,8 +119,14 @@ var vm = new Vue({
         socketServer: 'NULL',
         lists,
         componentsNames: names,
+        oneList : 'NULL',
         nameIndex: 0,
         currentView: 'NULL',
+    },
+    watch: {
+        componentsNames: function () {
+            vm.oneList = this.componentsNames.length === 1;
+        }
     },
     methods: {
         initialMessage() {
@@ -209,7 +228,7 @@ var vm = new Vue({
                 }
             }
             if (this.componentsNames.length === 0) {
-               this.noList = true;
+                this.noList = true;
             } else {
                 this.previousList();
             }
@@ -230,6 +249,7 @@ var vm = new Vue({
         let currentViewInUrl = window.location.pathname.split('/')[2];
         this.currentView = currentViewInUrl ? currentViewInUrl : this.componentsNames[this.nameIndex];
         this.noList = this.componentsNames.length === 0;
+        this.oneList = this.componentsNames.length === 1;
         console.log('nolist : ' + this.noList);
     }
 });
