@@ -45,7 +45,7 @@
         >
         </section>
         <footer class="">
-            <form v-if="!noList" class="itemAddForm" v-on:submit.prevent="itemAdd">
+            <form v-if="!(openMenu || noList)" class="itemAddForm" v-on:submit.prevent="itemAdd">
                 <input
                         id="itemInput"
                         v-model="itemInput"
